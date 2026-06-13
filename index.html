@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLSTICE — The Turing Test</title>
+<link rel="stylesheet" href="/src/main.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>SOLSTICE</h1>
+    <span class="sub">THE TURING TEST</span>
+    <div id="level-header">
+      <select id="level-select"></select>
+      <div id="level-name">Level 1</div>
+      <div id="level-subtitle"></div>
+    </div>
+  </header>
+
+  <div id="game-area">
+    <div id="game-container">
+      <canvas id="grid"></canvas>
+    </div>
+    <div id="editor-container"></div>
+  </div>
+
+  <div id="controls">
+    <span id="mode-label">
+      <span class="day-active">SUN</span>
+      <span style="color:#333"> / </span>
+      <span class="dim">MOON</span>
+    </span>
+    <button id="toggle-btn" class="day">☀ TOGGLE</button>
+    <button id="reset-btn">↺ RESET</button>
+    <button id="editor-btn">✎ EDITOR</button>
+  </div>
+
+  <div id="status">Click to place a mirror</div>
+
+  <div id="bottom-bar">
+    <span id="mirror-count">Mirrors: 0</span>
+    <button id="help-btn">?</button>
+  </div>
+</div>
+
+<button id="api-key-settings-btn" title="API Key">🔑</button>
+
+<div id="help-modal">
+  <div id="help-box">
+    <h3>HOW TO PLAY</h3>
+    <p><span class="hl">SOLSTICE</span> is a light-routing puzzle. Use mirrors to guide sunbeams and moonlight to their receptors.</p>
+    <p><span class="key">CLICK</span> an empty cell to place a <span style="color:#888">/</span> mirror. Click again to rotate to <span style="color:#888">\</span>. Click a third time to remove.</p>
+    <p><span class="key">RIGHT-CLICK</span> any mirror to remove it directly.</p>
+    <p><span class="key">TOGGLE</span> between <span style="color:#ffd700">SUN</span> and <span style="color:#4a90d9">MOON</span> mode. Each activates different emitters.</p>
+    <p>Route <span style="color:#ffd700">both</span> beams to their targets using the <span class="hl">same</span> mirror setup to complete the level.</p>
+    <p>Complete all levels to unlock the <span class="hl">Turing Test terminal</span>.</p>
+    <button class="close-btn" id="help-close">GOT IT</button>
+  </div>
+</div>
+
+<div id="terminal-overlay">
+  <div id="terminal">
+    <div id="terminal-header">
+      <span><span class="dot"></span> TERMINAL v1.0 — ENCRYPTED LINK</span>
+      <span style="color:#0a3a0a;">1945-06-21</span>
+    </div>
+    <div id="terminal-output">
+      <div class="st">[SIGNAL ACQUIRED]</div>
+      <div class="st">[DECRYPTION PROTOCOL v1.0]</div>
+      <div class="dim">---</div>
+    </div>
+    <div id="terminal-input-row">
+      <span class="prompt">λ></span>
+      <input id="terminal-input" type="text" placeholder="type a message..." autocomplete="off">
+    </div>
+  </div>
+</div>
+
+<div id="api-key-modal" class="visible">
+  <div id="api-key-box">
+    <h3>GEMINI API KEY</h3>
+    <p>Enter your Google Gemini API key for live AI responses in the terminal. The key is stored locally. Skip for demo mode.</p>
+    <input id="api-key-input" type="text" placeholder="AIzaSy..." spellcheck="false">
+    <div>
+      <button id="api-key-submit">CONNECT</button>
+      <button id="api-key-skip" class="skip-btn">DEMO MODE</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
