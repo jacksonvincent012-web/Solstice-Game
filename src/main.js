@@ -83,6 +83,10 @@ function updateUI() {
 function gameLoop() {
   if (!game.paused) {
     const result = renderer.draw(game, input.hoverCell);
+
+    if (result.dayLit && !prevDayLit) playReceptor();
+    if (result.nightLit && !prevNightLit) playReceptor();
+
     prevDayLit = result.dayLit;
     prevNightLit = result.nightLit;
 
@@ -105,8 +109,6 @@ function gameLoop() {
       }, 800);
     }
 
-    if (result.dayLit && !prevDayLit) playReceptor();
-    if (result.nightLit && !prevNightLit) playReceptor();
   }
   updateUI();
   requestAnimationFrame(gameLoop);

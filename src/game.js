@@ -43,10 +43,9 @@ export default class Game {
   }
 
   unlockNext() {
-    const next = this.levelId + 1;
-    if (next <= 5) this.solved.add(this.levelId);
+    this.solved.add(this.levelId);
     this.saveProgress();
-    return next;
+    return this.levelId + 1;
   }
 
   toggleDay() {

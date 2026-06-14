@@ -1,1 +1,0 @@
-export const COLS=8,ROWS=8;export const CELL=60,PADDING=40;export const CANVAS_W=COLS*CELL+PADDING*2;export const CANVAS_H=ROWS*CELL+PADDING*2;export const EMPTY=0,MIRROR_FWD=1,MIRROR_BACK=2;export const WALL=3,SUN_EMITTER=4,MOON_EMITTER=5;export const SUN_RECEPTOR=6,MOON_RECEPTOR=7;export const MODE_SUN='sun',MODE_MOON='moon';
