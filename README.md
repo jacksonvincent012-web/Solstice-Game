@@ -12,7 +12,7 @@ A Light-Routing Puzzle & AI Terminal Game
 
 ---
 
-##  Features
+  Features
 
 ### Core Game Systems
 | Feature | Description |
