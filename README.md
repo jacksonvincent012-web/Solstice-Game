@@ -1,6 +1,6 @@
 # 🌓 SOLSTICE — The Turing Test
 
-### A Light-Routing Puzzle & AI Terminal Game
+A Light-Routing Puzzle & AI Terminal Game
 
 ![Version](https://img.shields.io/badge/version-1.0.0-cyan)
 ![Build](https://img.shields.io/badge/build-passing-success)
