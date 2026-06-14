@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Solstice — Terminal</title>
+  <link rel="stylesheet" href="/src/main.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>SOLSTICE</h1>
+    <div class="sub">A PUZZLE OF LIGHT AND CONSCIOUSNESS</div>
+  </header>
+  <div id="level-header">
+    <select id="level-select"></select>
+    <span id="level-name">Level 1: First Light</span>
+  </div>
+  <div id="level-subtitle">Place a mirror to route the sunbeam</div>
+  <div id="game-area">
+    <div id="game-container">
+      <canvas id="grid" width="560" height="560"></canvas>
+    </div>
+  </div>
+  <div id="controls">
+    <span id="mode-label"><span class="day-active">SUN</span><span style="color:#333"> / </span><span class="dim">MOON</span></span>
+    <button id="toggle-btn">&#x2600; TOGGLE</button>
+    <button id="reset-btn">RESET</button>
+  </div>
+  <div id="bottom-bar">
+    <span id="mirror-count">Mirrors: 0</span>
+    <span id="status">Route the light to the receptor</span>
+    <button id="help-btn">?</button>
+  </div>
+</div>
+
+<div id="terminal-overlay">
+  <div id="terminal">
+    <div id="terminal-header"><span><span class="dot"></span> SOLSTICE TERMINAL v1.0</span><span style="color:#333;">[ENCRYPTED]</span></div>
+    <div id="terminal-output"><div class="st">[SIGNAL ACQUIRED]</div><div class="st">[DECRYPTION PROTOCOL v1.0]</div><div class="dim">---</div></div>
+    <div id="terminal-input-row"><span class="prompt">&#x3BB;</span><input id="terminal-input" type="text" placeholder="Type a message..." autocomplete="off"></div>
+  </div>
+</div>
+
+<div id="api-key-modal" class="visible">
+  <div id="api-key-box">
+    <h3>GEMINI AI KEY</h3>
+    <p>Enter your Gemini API key to enable AI-powered terminal responses.<br>Or skip to use demo mode with pre-recorded dialogue.</p>
+    <input id="api-key-input" type="password" placeholder="AIzaSy..." autocomplete="off">
+    <div>
+      <button id="api-key-submit">CONNECT</button>
+      <button id="api-key-skip" class="skip-btn">SKIP — DEMO MODE</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
