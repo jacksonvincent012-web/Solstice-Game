@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Solstice — Levels</title>
+  <link rel="stylesheet" href="/src/main.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>SOLSTICE</h1>
+    <div class="sub">A PUZZLE OF LIGHT AND SHADOW</div>
+  </header>
+  <div id="level-header">
+    <select id="level-select"></select>
+    <span id="level-name">Level 1: First Light</span>
+  </div>
+  <div id="level-subtitle">Place a mirror to route the sunbeam</div>
+  <div id="game-area">
+    <div id="game-container">
+      <canvas id="grid" width="560" height="560"></canvas>
+    </div>
+  </div>
+  <div id="controls">
+    <span id="mode-label"><span class="day-active">SUN</span><span style="color:#333"> / </span><span class="dim">MOON</span></span>
+    <button id="toggle-btn">&#x2600; TOGGLE</button>
+    <button id="reset-btn">RESET</button>
+  </div>
+  <div id="bottom-bar">
+    <span id="mirror-count">Mirrors: 0</span>
+    <span id="status">Route the light to the receptor</span>
+  </div>
+</div>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
