@@ -1,108 +1,195 @@
 # Solstice
 
-A light-routing puzzle game built with vanilla JavaScript and rendered on HTML Canvas. Players place diagonal mirrors on an 8x8 grid to redirect beams from celestial emitters (Sun and Moon) to their matching receptors. Both receptors must be lit simultaneously to complete each level.
+**A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, and a CRT terminal narrative.**
 
-The game features a full ray-tracing engine, dual day/night mode, five hand-crafted levels, a level editor with JSON export, atmospheric sound design via the Web Audio API, and a CRT-style terminal interface with an optional Gemini AI integration.
+Built with vanilla JavaScript, rendered on HTML Canvas 2D, with audio synthesis via the Web Audio API and optional AI-powered dialogue through Google Gemini. Deployed as a static site on the Netlify CDN.
 
----
-
-## Development Log
-
-### Day 1 -- Core Grid and Mirror Placement
-Established the foundational 8x8 grid with an HTML Canvas renderer. Implemented click-to-cycle mirror placement, alternating between forward-slash (/) and backslash (\) orientations. The grid renders with a checkerboard pattern and interactive cell highlighting on hover.
-
-### Day 2 -- Ray Tracing Engine
-Built the beam simulation system. Rays emit from the Sun emitter and travel across the grid, reflecting off mirrors at physically accurate angles. Beams render with a two-pass glow effect for visual clarity, and terminate on walls, receptors, or out-of-bounds.
-
-### Day 3 -- Day/Night Toggle and Win Detection
-Added the Moon emitter and a toggle mechanism to switch between Sun and Moon modes. Each mode activates only its corresponding emitter and receptor. Win detection fires when both receptors register a hit simultaneously, regardless of the current toggle state.
-
-### Day 4 -- Level System and Persistence
-Restructured the project into ES modules with Vite as the build tool. Introduced five levels with increasing complexity, a level selector dropdown, and localStorage persistence for unlocked levels. Each level stores emitter positions, wall layouts, and par scores.
-
-### Day 5 -- Terminal Interface and Audio
-Integrated a CRT-style terminal overlay featuring a Bletchley Park narrative theme. The terminal limits interaction to three questions and culminates in a Turing test. Added Web Audio API sound effects for mirror placement, removal, toggle, win, and receptor activation.
-
-### Day 6 -- Gemini AI Integration (Server)
-Built an Express proxy server that forwards terminal chat requests to the Google Gemini API. The server acts as a relay, injecting a system prompt that establishes the wartime 1945 persona. On static hosting, the terminal falls back to seven pre-recorded dialogue fragments.
-
-### Day 7 -- Level Editor and Polish
-Implemented an in-game level editor with an eight-cell palette, canvas-based placement, and one-click JSON export to clipboard. Added keyboard shortcuts (T to toggle, R to reset, Esc to close modals), a help modal, hover-highlight refinements, and responsive canvas scaling.
+**[vinny-deploy.netlify.app](https://vinny-deploy.netlify.app)**
 
 ---
 
-## Deployment
+## Architecture
 
-The application is deployed as a static site via Netlify. Below is the deployment pipeline.
+Each subsystem is a standalone ES module communicating through a central game state, orchestrated by a `requestAnimationFrame` game loop.
 
-```
-Source Code (src/)
-       |
-       v
-  npm run build (Vite)
-       |
-       v
-  dist/  ---------------------------+
-  index.html                        |
-  assets/index-xxxxxxxx.js          |
-  assets/index-xxxxxxxx.css         |
-       |                            |
-       v                            v
-  Netlify Deploy API          Netlify Git Import
-  (zip upload)                (auto-build from repo)
-       |                            |
-       +----------+-----------------+
-                  |
-                  v
-        Netlify CDN (edge network)
-                  |
-                  v
-        Production URL
-    https://vinny-deploy.netlify.app
+### Core Rendering Pipeline
+
+```mermaid
+flowchart LR
+    subgraph Pipeline[Core Pipeline]
+        direction LR
+        GL["GAME LOOP<br>main.js<br>requestAnimationFrame<br>renderer.draw()<br>updateUI()"]
+        RT["RAY TRACER<br>raytracer.js<br>Dual-pass simulation<br>SUN + MOON paths<br>Cycle detection"]
+        RD["RENDERER<br>renderer.js<br>3-pass canvas draw<br>Glow + dashes + pulses<br>Particle integration"]
+        PS["PARTICLES<br>particles.js<br>emit() / burst()<br>update(dt) / draw()<br>Lifecycle management"]
+    end
+
+    GL --> RT --> RD --> PS
 ```
 
-### Deployment Steps
+### Supporting Systems
 
-1. Run `npm run build` to generate the `dist/` directory containing the production bundle.
-2. Upload the contents of `dist/` to Netlify via the Deploy API or connect the GitHub repository through the Netlify dashboard for automatic builds on push.
-3. Netlify distributes the static assets across its global CDN edge network.
-4. The site is served at the assigned production URL with automatic HTTPS, asset hashing for cache busting, and instant rollback support.
+```mermaid
+flowchart TB
+    subgraph Systems[Supporting Systems]
+        direction TB
+        IM["INPUT<br>input.js<br>Mouse + Touch<br>Long-press gesture<br>Coord mapping"]
+        GS["GAME STATE<br>game.js<br>8x8 grid state<br>Level load / reset<br>Save / load progress<br>Win detection"]
+        AU["AUDIO<br>audio.js<br>Web Audio synthesis<br>Osc + Gain nodes<br>5 sound effects<br>Zero audio files"]
+        ED["EDITOR<br>editor.js<br>Tool palette<br>Grid painting<br>JSON export"]
+    end
+
+    IM --> GS --> AU
+    GS --> ED
+```
+
+### Terminal System
+
+```mermaid
+flowchart LR
+    subgraph Terminal[Terminal System]
+        direction LR
+        TM["TERMINAL<br>terminal.js<br>3 questions max<br>Typewriter output<br>Turing test finale"]
+        GA["GEMINI AI<br>if key configured<br>fetch /api/chat<br>Bletchley persona<br>Dynamic responses"]
+        DM["DEMO MODE<br>fallback<br>11 pre-recorded<br>Fragmented memory<br>Random selection"]
+    end
+
+    TM --> GA
+    TM --> DM
+```
+
+---
+
+## Beam Physics
+
+The ray tracer uses grid-based ray marching with cycle detection.
+
+```mermaid
+flowchart TB
+    subgraph RayMarch[Ray Marching Step]
+        direction TB
+        A["Ray enters cell<br>x += dirX, y += dirY"] --> B{"Cell type"}
+        B -->|"WALL"| C["Terminate"]
+        B -->|"RECEPTOR"| D["hitReceptor = true<br>Terminate"]
+        B -->|"MIRROR_FWD (/)"| E["Transform direction<br>[dx, dy] = [-dy, -dx]"]
+        B -->|"MIRROR_BACK (\\)"| F["Transform direction<br>[dx, dy] = [dy, dx]"]
+        B -->|"EMPTY"| G["Continue to next cell"]
+        E --> A
+        F --> A
+    end
+```
+
+Mirror reflection rules:
+
+| Mirror | Direction in | Direction out |
+|--------|-------------|--------------|
+| `/`    | Right (1,0)  | Up (0,-1)    |
+| `/`    | Down (0,1)   | Left (-1,0)  |
+| `/`    | Left (-1,0)  | Down (0,1)   |
+| `/`    | Up (0,-1)    | Right (1,0)  |
+| `\`    | Right (1,0)  | Down (0,1)   |
+| `\`    | Down (0,1)   | Right (1,0)  |
+| `\`    | Left (-1,0)  | Up (0,-1)    |
+| `\`    | Up (0,-1)    | Left (-1,0)  |
+
+The simulation runs twice per frame — once for SUN mode and once for MOON mode — storing both results independently. Win detection fires when both spectra report a receptor hit, regardless of the active toggle state.
+
+---
+
+## Key Technical Challenges
+
+### Mirrors and Vector Reflection
+Each mirror orientation (`/` and `\`) applies a specific transformation to the ray direction vector. The `/` mirror swaps and negates both components (`[dx, dy] → [-dy, -dx]`), while the `\` mirror swaps them without negation (`[dx, dy] → [dy, dx]`). This determines the full 16-state reflection table that governs all beam interactions.
+
+### Cycle Detection in Closed Paths
+Mirror arrangements can create infinite loops (e.g., two `/` mirrors facing each other). A visited-set indexed by `x * GRID_SIZE + y` breaks cycles and prevents stack overflow, allowing the tracer to terminate predictably on any arrangement.
+
+### Dual-Pass Simulation
+Two complete ray traces execute per frame — one for SUN emitters/receptors, one for MOON. Both results persist in memory simultaneously so the renderer can show the appropriate beam set and detect cross-mode wins. This is not a toggle-switch; the inactive mode's result is still computed for win validation.
+
+### Rising-Edge Sound Triggers
+Audio effects for receptor activation use a state comparison pattern: `currentLit && !previousLit`. The previous state must update *after* the comparison, not before — a sequence bug that suppresses sound if reversed.
+
+### Responsive Canvas Scaling
+The canvas maintains a fixed internal resolution (560×560) while CSS scales it to fill its container. Input coordinates are reverse-mapped by `clientX → (clientX - rect.left) × (internalSize / rect.width)`, preserving pixel-accurate grid hits at any viewport size.
+
+---
+
+## Development Progression
+
+The project evolved across four phases, each building on the previous. Source snapshots for each phase are in the `day1/`–`day4/` directories.
+
+```mermaid
+flowchart LR
+    subgraph Dev[Development Timeline]
+        direction LR
+        D1["Phase 1<br>Core Mechanics<br>8x8 grid · Canvas renderer<br>Ray tracer · SUN emitter<br>Mirror placement"]
+        D2["Phase 2<br>Game Systems<br>MOON emitter · Day/night toggle<br>5 levels · Win detection<br>localStorage save"]
+        D3["Phase 3<br>Terminal + Audio<br>CRT terminal · 3-question AI chat<br>Gemini API · Web Audio SFX<br>Bletchley narrative"]
+        D4["Phase 4<br>Editor + Polish<br>Level editor · JSON export<br>Animated beams · Particles<br>Touch support · Intro screen"]
+    end
+    D1 --> D2 --> D3 --> D4
+```
+
+| Phase | Focus | Key Additions | Snapshot |
+|-------|-------|---------------|----------|
+| **1** | Core Mechanics | Grid, Canvas renderer, ray tracer, SUN emitter, mirror placement (`/` `\`) | [`day1/`](day1/) |
+| **2** | Game Systems | MOON emitter, day/night toggle, 5 levels, win detection, level selector, localStorage | [`day2/`](day2/) |
+| **3** | Terminal + Audio | CRT terminal, Gemini API, 3-question chat, Web Audio synthesis, Bletchley narrative | [`day3/`](day3/) |
+| **4** | Editor + Polish | Level editor, particle system, animated beams, intro screen, touch support, responsive CSS | [`day4/`](day4/) |
+
+## Technologies
+
+| Layer | Technology |
+|-------|-----------|
+| Language | Vanilla JavaScript (ES Modules) |
+| Rendering | HTML Canvas 2D API |
+| Build | Vite |
+| Audio | Web Audio API (OscillatorNode + GainNode) |
+| AI | Google Gemini API (optional) |
+| Hosting | Netlify CDN |
+| Persistence | localStorage |
 
 ---
 
 ## Project Structure
 
 ```
-├── index.html              Entry point with full DOM structure
-├── package.json            Vite dependencies and build scripts
-├── vite.config.js          Vite configuration
+├── index.html              Entry point, DOM structure, modal overlays
+├── package.json            Vite build configuration
+├── vite.config.js
 ├── src/
-│   ├── main.js             Application entry point and game loop
-│   ├── constants.js        Cell type enums, colors, grid dimensions
-│   ├── game.js             Game state, level loading, progress save
-│   ├── levels.js           Five level definitions
-│   ├── raytracer.js        Beam path simulation
-│   ├── renderer.js         Canvas drawing and animation
-│   ├── input.js            Mouse interaction and grid coordinate mapping
-│   ├── terminal.js         CRT terminal with Gemini API integration
-│   ├── editor.js           Level editor with JSON export
-│   ├── audio.js            Web Audio API sound effects
-│   └── main.css            Full application stylesheet
-├── server/
-│   └── server.js           Express proxy for Gemini API (optional)
+│   ├── main.js             Game loop, UI updates, event wiring
+│   ├── game.js             State machine, level loading, save/load
+│   ├── levels.js           Level definitions (build functions)
+│   ├── raytracer.js        Ray marching engine, mirror reflection
+│   ├── renderer.js         Canvas draw: cells, beams, particles
+│   ├── particles.js        Particle system: emit, burst, update, draw
+│   ├── input.js            Mouse/touch handlers, coordinate mapping
+│   ├── terminal.js         CRT terminal, Gemini API, demo dialogue
+│   ├── editor.js           Level editor, tool palette, JSON export
+│   ├── audio.js            Web Audio sound synthesis
+│   ├── constants.js        Enums, colors, grid dimensions
+│   └── main.css            Full stylesheet, responsive media queries
 └── README.md
 ```
 
 ---
 
-## Technologies
+## Deployment
 
-- Vanilla JavaScript (ES Modules)
-- HTML Canvas 2D API
-- Vite (build tool and development server)
-- Web Audio API
-- Google Gemini API (optional, terminal integration)
-- Netlify (static hosting and CDN)
+```mermaid
+flowchart LR
+    subgraph Deploy[Deployment Pipeline]
+        direction LR
+        SRC["Source<br>src/"] --> VITE["Vite Build<br>npm run build"]
+        VITE --> DIST["dist/<br>index.html + assets"]
+        DIST --> NETLIFY["Netlify CDN<br>HTTPS · Edge cache<br>Instant rollback"]
+        NETLIFY --> LIVE["Production<br>vinny-deploy.netlify.app"]
+    end
+```
+
+Build produces a versioned bundle with content-hashed assets for cache busting. The site is served over HTTPS with global edge distribution, instant rollback, and zero server-side runtime.
 
 ---
 
