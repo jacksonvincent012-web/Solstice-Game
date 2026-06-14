@@ -116,7 +116,7 @@ npm run build
 | Place `/` mirror | Click empty cell |
 | Rotate to `\` | Click again |
 | Remove mirror | Click a third time, or right-click |
-| Toggle day/night | Click ☀ / ☾ button |
+| Toggle day/night | Click  / ☾ button |
 | Reset level | Click ↺ RESET |
 | Open level editor | Click ✎ EDITOR |
 
