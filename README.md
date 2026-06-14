@@ -7,7 +7,7 @@
 ![Tech](https://img.shields.io/badge/stack-Vite%20%7C%20JavaScript%20%7C%20Canvas%20%7C%20Gemini-blue)
 ![Rating](https://img.shields.io/badge/rating-9.5%2F10-green)
 
-> Route sunlight and moonlight through mirrors to unlock a trapped consciousness. Then face the Turing Test — is it human or machine?
+> Route sunlight and moonlight through mirrors to unlock a trapped consciousness. Then face the Turing Test — is it human or machine?give it a try to find out
 > <img width="1920" height="1032" alt="Screenshot 2026-06-13 214124" src="https://github.com/user-attachments/assets/3d34bb1c-dd27-48e8-8ada-aad98f85c340" />
 
 ---
