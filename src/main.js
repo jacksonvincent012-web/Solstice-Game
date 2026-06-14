@@ -34,6 +34,8 @@ function updateUI() {
   const levelName = document.getElementById('level-name');
   const levelSub = document.getElementById('level-subtitle');
   const levelSelect = document.getElementById('level-select');
+  const mirrorCount = document.getElementById('mirror-count');
+  if (mirrorCount) mirrorCount.textContent = 'Mirrors: ' + game.mirrorCount;
 
   toggleBtn.textContent = game.isDay ? '\u2600 TOGGLE' : '\u263E TOGGLE';
   toggleBtn.className = game.isDay ? 'day' : 'night';
@@ -141,6 +143,20 @@ document.getElementById('help-close').addEventListener('click', () => {
 document.getElementById('help-modal').addEventListener('click', (e) => {
   if (e.target === document.getElementById('help-modal'))
     document.getElementById('help-modal').classList.remove('visible');
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === 't' || e.key === 'T') {
+    if (game.hasWon || game.paused) return;
+    game.toggleDay(); playToggle(); updateUI();
+  }
+  if (e.key === 'r' || e.key === 'R') { game.resetLevel(); updateUI(); }
+  if (e.key === 'Escape') {
+    document.getElementById('help-modal').classList.remove('visible');
+    if (terminal.isOpen) terminal.close();
+    if (editor.active) editor.hide();
+  }
 });
 
 // API key modal
