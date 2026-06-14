@@ -1,3 +1,4 @@
+// Vite bundler configuration — ES module build with dev server proxy
 import { defineConfig } from 'vite';
 
 export default defineConfig({
