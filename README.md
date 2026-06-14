@@ -148,19 +148,6 @@ npm run build
 
 ---
 
-##  Rating
-
-| Category | Score |
-|----------|-------|
-| Visual Design | 9/10 |
-| Functionality | 9/10 |
-| Code Quality | 9/10 |
-| Puzzle Design | 9/10 |
-| Interactivity | 9/10 |
-| Completeness | 8.5/10 |
-
----
-
 ##  License
 This project is licensed under the Apache License 2.0 — see the [LICENSE](LICENSE) file for details.
 
