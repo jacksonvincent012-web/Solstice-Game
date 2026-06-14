@@ -12,37 +12,37 @@
 
 ---
 
-## 🌟 Features
+##  Features
 
 ### Core Game Systems
 | Feature | Description |
 |---------|-------------|
-| 🪞 **Ray Tracing** | Real-time light propagation with `/` and `\` mirror reflection |
-| ☀️ **Solstice Toggle** | Switch between SUN and MOON modes — different emitters activate |
-| 🧩 **5 Levels** | Progressive difficulty from tutorial to complex maze |
-| 💾 **Progress Save** | Level completion saved to localStorage |
-| 🔊 **Sound Design** | Web Audio API tones for every action |
-| 🖱️ **Hover + Feedback** | Visual hover, pulse hints, status messages |
+|  **Ray Tracing** | Real-time light propagation with `/` and `\` mirror reflection |
+|  **Solstice Toggle** | Switch between SUN and MOON modes — different emitters activate |
+|  **5 Levels** | Progressive difficulty from tutorial to complex maze |
+|  **Progress Save** | Level completion saved to localStorage |
+|  **Sound Design** | Web Audio API tones for every action |
+| **Hover + Feedback** | Visual hover, pulse hints, status messages |
 
 ### Turing Test Terminal
 | Feature | Description |
 |---------|-------------|
-| 🖥️ **CRT Terminal** | Retro green-on-black aesthetic with typewriter animation |
-| 🤖 **Gemini AI** | Configurable Google Gemini API key for live responses |
-| 📜 **Demo Mode** | Pre-written fragments when no API key is set |
-| 🎭 **System Prompt** | 1945 Bletchley Park consciousness persona |
-| ❓ **3 Questions** | Interrogate the entity, then guess human or machine |
+| **CRT Terminal** | Retro green-on-black aesthetic with typewriter animation |
+| **Gemini AI** | Configurable Google Gemini API key for live responses |
+|  **Demo Mode** | Pre-written fragments when no API key is set |
+|  **System Prompt** | 1945 Bletchley Park consciousness persona |
+|  **3 Questions** | Interrogate the entity, then guess human or machine |
 
 ### Level Editor
 | Feature | Description |
 |---------|-------------|
-| ✏️ **Paint Grid** | Place emitters, receptors, walls, mirrors visually |
-| 📋 **Export JSON** | Copy level data to clipboard for sharing |
-| 🎨 **8 Cell Types** | Empty, wall, `/` mirror, `\` mirror, sun/moon emitters & receptors |
+|  **Paint Grid** | Place emitters, receptors, walls, mirrors visually |
+| **Export JSON** | Copy level data to clipboard for sharing |
+|  **8 Cell Types** | Empty, wall, `/` mirror, `\` mirror, sun/moon emitters & receptors |
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -63,7 +63,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -77,7 +77,7 @@
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Frontend Only (Standalone)
 ```bash
@@ -109,7 +109,7 @@ npm run build
 
 ---
 
-## 🎮 How to Play
+##  How to Play
 
 | Action | Input |
 |--------|-------|
@@ -126,7 +126,7 @@ npm run build
 
 ---
 
-## 🗺️ Levels
+##  Levels
 
 | # | Name | Par | Description |
 |---|------|-----|-------------|
@@ -138,7 +138,7 @@ npm run build
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+##  Keyboard Shortcuts
 
 | Key | Action |
 |-----|--------|
@@ -154,7 +154,7 @@ npm run build
 
 ---
 
-## 🏆 Rating
+##  Rating
 
 | Category | Score |
 |----------|-------|
@@ -167,9 +167,9 @@ npm run build
 
 ---
 
-## 📄 License
+##  License
 This project is licensed under the Apache License 2.0 — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-*Built with ❤️ for the Solstice Game Jam*
+*Built  for the Solstice Game Jam*
