@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solstice - Day 1</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a1a;color:#c8c8e0;font-family:'Courier New',monospace;display:flex;justify-content:center;align-items:center;min-height:100vh}
+#app{display:flex;flex-direction:column;align-items:center;gap:12px}
+h1{font-size:20px;letter-spacing:4px;color:#ffd700}
+canvas{display:block;cursor:pointer;border:1px solid #1a1a3a;border-radius:4px}
+</style>
+</head>
+<body>
+<div id="app"><h1>SOLSTICE</h1><div>DAY 1 - Grid & Mirrors</div>
+<canvas id="grid" width="480" height="480"></canvas></div>
+<script>
+const W=480,COLS=8,ROWS=8,CELL=W/COLS,c=document.getElementById('grid'),cx=c.getContext('2d');
+const g=Array.from({length:ROWS},()=>Array(COLS).fill(0));
+c.onclick=e=>{const r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*(W/r.width),my=(e.clientY-r.top)*(W/r.height),gx=Math.floor(mx/CELL),gy=Math.floor(my/CELL);if(gx<0||gx>=COLS||gy<0||gy>=ROWS)return;g[gy][gx]=(g[gy][gx]+1)%3;d()};
+c.oncontextmenu=e=>{e.preventDefault();const r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*(W/r.width),my=(e.clientY-r.top)*(W/r.height),gx=Math.floor(mx/CELL),gy=Math.floor(my/CELL);if(gx<0||gx>=COLS||gy<0||gy>=ROWS)return;if(g[gy][gx]===1||g[gy][gx]===2){g[gy][gx]=0;d()}};
+function d(){cx.clearRect(0,0,W,W);for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){const px=x*CELL,py=y*CELL;cx.fillStyle=(x+y)%2===0?'#0d0d22':'#11112a';cx.fillRect(px,py,CELL,CELL);cx.strokeStyle='#1a1a3a';cx.lineWidth=.5;cx.strokeRect(px,py,CELL,CELL);if(g[y][x]===1||g[y][x]===2){cx.strokeStyle='#8888bb';cx.lineWidth=3;cx.beginPath();if(g[y][x]===1){cx.moveTo(px+8,py+CELL-8);cx.lineTo(px+CELL-8,py+8);}else{cx.moveTo(px+8,py+8);cx.lineTo(px+CELL-8,py+CELL-8);}cx.stroke();}}}d();
+</script>
+</body>
+</html>

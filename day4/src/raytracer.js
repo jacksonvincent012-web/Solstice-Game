@@ -1,0 +1,1 @@
+import{COLS,ROWS,WALL,MIRROR_FWD,MIRROR_BACK}from'./constants.js';export function traceRay(grid,sx,sy,sdx,sdy){const cells=[];let x=sx,y=sy,dx=sdx,dy=sdy;while(true){x+=dx;y+=dy;if(x<0||x>=COLS||y<0||y>=ROWS)break;cells.push({x,y});const c=grid[y][x];if(c===WALL)break;if(c===MIRROR_FWD){[dx,dy]=[-dy,-dx]}else if(c===MIRROR_BACK){[dx,dy]=[dy,dx]}}return cells}
