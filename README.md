@@ -133,10 +133,10 @@ flowchart LR
 
 | Phase | Focus | Key Additions | Snapshot |
 |-------|-------|---------------|----------|
-| **1** | Core Mechanics | Grid, Canvas renderer, ray tracer, SUN emitter, mirror placement (`/` `\`) | [`day1/`](DAY1) |
-| **2** | Game Systems | MOON emitter, day/night toggle, 5 levels, win detection, level selector, localStorage | [`day2/`](DAY2) |
-| **3** | Terminal + Audio | CRT terminal, Gemini API, 3-question chat, Web Audio synthesis, Bletchley narrative | [`day3/`](DAY3) |
-| **4** | Editor + Polish | Level editor, particle system, animated beams, intro screen, touch support, responsive CSS | [`day4/`](DAY4) |
+| **1** | Core Mechanics | Grid, Canvas renderer, ray tracer, SUN emitter, mirror placement (`/` `\`) | (DAY1) |
+| **2** | Game Systems | MOON emitter, day/night toggle, 5 levels, win detection, level selector, localStorage | (DAY2) |
+| **3** | Terminal + Audio | CRT terminal, Gemini API, 3-question chat, Web Audio synthesis, Bletchley narrative | (DAY3) |
+| **4** | Editor + Polish | Level editor, particle system, animated beams, intro screen, touch support, responsive CSS | (DAY4) |
 
 ## Technologies
 
