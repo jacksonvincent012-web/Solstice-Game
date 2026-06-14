@@ -148,12 +148,6 @@ npm run build
 
 ---
 
-## 📸 Screenshots
-
-> *(Add screenshots here — capture the grid, terminal, and editor)*
-
----
-
 ##  Rating
 
 | Category | Score |
