@@ -1,4 +1,5 @@
 # Solstice
+<img width="1920" height="1032" alt="Screenshot 2026-06-15 202114" src="https://github.com/user-attachments/assets/4a8258fd-2744-474f-98d4-f0b6a29cabe3" />
 
 **A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, 10 graduated levels, a CRT terminal narrative, undo/redo, and a star-based rating system.**
 
