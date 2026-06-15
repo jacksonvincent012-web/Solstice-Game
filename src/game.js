@@ -1,5 +1,9 @@
 import { GRID_SIZE } from './constants.js';
-import { getLevelGrid, getLevel } from './levels.js';
+import { getLevelGrid, getLevel, LEVELS } from './levels.js';
+
+export const STANDARD_IDS = [1,2,3,4,5,6,7,8,9,10];
+export const MASTER_IDS = [11,12,13,14,15];
+export const GRANDMASTER_IDS = [16,17,18];
 
 export default class Game {
   constructor() {
@@ -11,6 +15,8 @@ export default class Game {
     this.mirrorCount = 0;
     this.solved = new Set();
     this.stars = {};
+    this.masterUnlocked = false;
+    this.grandmasterUnlocked = false;
     this.loadProgress();
     this.loadLevel(this.levelId);
   }
@@ -33,6 +39,8 @@ export default class Game {
       this.solved = new Set(data.solved || []);
       this.levelId = data.levelId || 1;
       this.stars = data.stars || {};
+      this.masterUnlocked = !!data.masterUnlocked;
+      this.grandmasterUnlocked = !!data.grandmasterUnlocked;
     } catch { this.solved = new Set(); this.stars = {}; }
   }
 
@@ -41,6 +49,8 @@ export default class Game {
       solved: [...this.solved],
       levelId: this.levelId,
       stars: this.stars,
+      masterUnlocked: this.masterUnlocked,
+      grandmasterUnlocked: this.grandmasterUnlocked,
     }));
   }
 
@@ -63,6 +73,33 @@ export default class Game {
     if (this.mirrorCount <= par) return 3;
     if (this.mirrorCount <= par + 2) return 2;
     return 1;
+  }
+
+  allStandardSolved() {
+    return STANDARD_IDS.every(id => this.solved.has(id));
+  }
+
+  allMasterSolved() {
+    return MASTER_IDS.every(id => this.solved.has(id));
+  }
+
+  allGrandmasterSolved() {
+    return GRANDMASTER_IDS.every(id => this.solved.has(id));
+  }
+
+  isLevelAccessible(id) {
+    if (STANDARD_IDS.includes(id)) {
+      return id === 1 || this.solved.has(id - 1);
+    }
+    if (MASTER_IDS.includes(id)) {
+      if (!this.masterUnlocked) return false;
+      return id === 11 || this.solved.has(id - 1);
+    }
+    if (GRANDMASTER_IDS.includes(id)) {
+      if (!this.grandmasterUnlocked) return false;
+      return id === 16 || this.solved.has(id - 1);
+    }
+    return true;
   }
 
   toggleDay() { this.isDay = !this.isDay; }

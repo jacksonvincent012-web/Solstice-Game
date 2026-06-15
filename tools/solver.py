@@ -81,6 +81,37 @@ def grid_key(grid):
     return tuple(tuple(row) for row in grid)
 
 
+def path_length(grid, sx, sy, dx, dy, receptor_type, emitter_type):
+    """Count cells along beam path until wall, receptor, or edge."""
+    x, y = sx + dx, sy + dy
+    count = 0
+    visited = set()
+    while 0 <= x < GRID_SIZE and 0 <= y < GRID_SIZE:
+        key = (x, y)
+        if key in visited:
+            break
+        visited.add(key)
+        cell = grid[y][x]
+        if cell == WALL or cell == receptor_type or cell == emitter_type:
+            break
+        count += 1
+        x += dx
+        y += dy
+    return count
+
+
+def candidate_score(grid, cx, cy):
+    """Score a candidate cell — prefer cells closer to receptors."""
+    score = 0
+    for y in range(GRID_SIZE):
+        for x in range(GRID_SIZE):
+            cell = grid[y][x]
+            if cell == SUN_RECEPTOR or cell == MOON_RECEPTOR:
+                dist = abs(cx - x) + abs(cy - y)
+                score = max(score, 8 - dist)
+    return score
+
+
 def dfs(grid, depth, max_depth, visited):
     if check_win(grid):
         return []
@@ -89,8 +120,14 @@ def dfs(grid, depth, max_depth, visited):
         return None
 
     candidates = get_reachable_empty(grid)
+    if not candidates:
+        return None
 
-    for cx, cy in sorted(candidates):
+    # Order candidates by score (closer to receptors first)
+    scored = [(candidate_score(grid, cx, cy), cx, cy) for cx, cy in candidates]
+    scored.sort(reverse=True)
+
+    for score, cx, cy in scored[:12]:  # Limit branching to 12 per depth
         for mirror in (MIRROR_FWD, MIRROR_BACK):
             grid[cy][cx] = mirror
             key = grid_key(grid)
@@ -155,6 +192,42 @@ LEVELS = [
             (3, 1), (4, 1), (5, 1),
             (3, 5), (4, 5), (5, 5),
             (6, 2), (6, 3), (6, 4)]]},
+    # --- MASTER LEVELS ---
+    {'id': 11, 'name': "Master's Gate", 'par': 4, 'data': [
+        (0, 0, SUN_EMITTER), (4, 7, SUN_RECEPTOR),
+        (7, 7, MOON_EMITTER), (3, 0, MOON_RECEPTOR),
+        (0, 4, WALL), (7, 3, WALL), (2, 3, WALL), (5, 4, WALL)]},
+    {'id': 12, 'name': 'The Gauntlet', 'par': 4, 'data': [
+        (0, 3, SUN_EMITTER), (7, 4, SUN_RECEPTOR),
+        (7, 3, MOON_EMITTER), (0, 4, MOON_RECEPTOR),
+        (0, 6, WALL), (7, 1, WALL)]},
+    {'id': 13, 'name': 'Mirror Maze', 'par': 4, 'data': [
+        (0, 0, SUN_EMITTER), (3, 7, SUN_RECEPTOR),
+        (7, 7, MOON_EMITTER), (4, 0, MOON_RECEPTOR),
+        (0, 4, WALL), (7, 3, WALL), (2, 3, WALL), (5, 4, WALL)]},
+    {'id': 14, 'name': 'Double Cross', 'par': 5, 'data': [
+        (0, 0, SUN_EMITTER), (6, 7, SUN_RECEPTOR),
+        (7, 7, MOON_EMITTER), (1, 0, MOON_RECEPTOR),
+        (0, 4, WALL), (7, 3, WALL), (2, 3, WALL), (5, 4, WALL)]},
+    {'id': 15, 'name': 'The Crucible', 'par': 4, 'data': [
+        (0, 0, SUN_EMITTER), (7, 4, SUN_RECEPTOR),
+        (7, 7, MOON_EMITTER), (0, 3, MOON_RECEPTOR),
+        (0, 6, WALL), (7, 1, WALL),
+        (6, 4, WALL), (1, 3, WALL)]},
+    # --- GRANDMASTER LEVELS ---
+    {'id': 16, 'name': 'Shadow Realm', 'par': 4, 'data': [
+        (0, 0, SUN_EMITTER), (3, 7, SUN_RECEPTOR),
+        (7, 7, MOON_EMITTER), (4, 0, MOON_RECEPTOR),
+        (0, 4, WALL), (7, 3, WALL), (2, 2, WALL), (5, 5, WALL)]},
+    {'id': 17, 'name': 'The Abyss', 'par': 5, 'data': [
+        (0, 0, SUN_EMITTER), (7, 7, SUN_RECEPTOR),
+        (0, 7, MOON_EMITTER), (7, 0, MOON_RECEPTOR),
+        (0, 3, WALL), (0, 4, WALL), (0, 5, WALL)]},
+    {'id': 18, 'name': 'The Impossible', 'par': 6, 'data': [
+        (0, 0, SUN_EMITTER), (7, 4, SUN_RECEPTOR),
+        (7, 7, MOON_EMITTER), (0, 3, MOON_RECEPTOR),
+        (0, 5, WALL), (7, 2, WALL),
+        (2, 4, WALL), (5, 3, WALL)]},
 ]
 
 

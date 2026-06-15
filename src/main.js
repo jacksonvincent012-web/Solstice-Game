@@ -1,4 +1,4 @@
-import Game from './game.js';
+import Game, { STANDARD_IDS, MASTER_IDS, GRANDMASTER_IDS } from './game.js';
 import { Renderer } from './renderer.js';
 import InputManager from './input.js';
 import Terminal from './terminal.js';
@@ -116,6 +116,25 @@ terminal.onClose = () => {
   updateUI();
 };
 
+function buildLevelOpts(ids, label, unlocked) {
+  const frag = document.createDocumentFragment();
+  if (!unlocked) return frag;
+  const group = document.createElement('optgroup');
+  group.label = label;
+  ids.forEach(id => {
+    const level = LEVELS.find(l => l.id === id);
+    if (!level) return;
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = `${id}. ${level.name}`;
+    opt.disabled = !game.isLevelAccessible(id) && id !== game.levelId;
+    if (id === game.levelId) opt.selected = true;
+    group.appendChild(opt);
+  });
+  frag.appendChild(group);
+  return frag;
+}
+
 function updateUI() {
   const toggleBtn = document.getElementById('toggle-btn');
   const modeLabel = document.getElementById('mode-label');
@@ -134,19 +153,18 @@ function updateUI() {
 
   const level = LEVELS.find(l => l.id === game.levelId);
   if (level) {
-    levelName.textContent = `Level ${level.id}: ${level.name}`;
+    const prefix = STANDARD_IDS.includes(level.id) ? '' : MASTER_IDS.includes(level.id) ? 'MASTER ' : 'GM ';
+    levelName.textContent = `${prefix}Level ${level.id}: ${level.name}`;
     levelSub.textContent = level.subtitle;
   }
 
   levelSelect.innerHTML = '';
-  LEVELS.forEach(l => {
-    const opt = document.createElement('option');
-    opt.value = l.id;
-    opt.textContent = `${l.id}. ${l.name}`;
-    opt.disabled = l.id > 1 && !game.solved.has(l.id - 1) && l.id !== game.levelId;
-    if (l.id === game.levelId) opt.selected = true;
-    levelSelect.appendChild(opt);
-  });
+  const standardFrag = buildLevelOpts(STANDARD_IDS, 'STANDARD', true);
+  if (standardFrag.hasChildNodes()) levelSelect.appendChild(standardFrag);
+  const masterFrag = buildLevelOpts(MASTER_IDS, 'MASTER', game.masterUnlocked);
+  if (masterFrag.hasChildNodes()) levelSelect.appendChild(masterFrag);
+  const gmFrag = buildLevelOpts(GRANDMASTER_IDS, 'GRANDMASTER', game.grandmasterUnlocked);
+  if (gmFrag.hasChildNodes()) levelSelect.appendChild(gmFrag);
 
   const dayLit = prevDayLit;
   const nightLit = prevNightLit;
@@ -260,8 +278,102 @@ document.getElementById('sound-toggle').addEventListener('change', (e) => {
 const soundToggle = document.getElementById('sound-toggle');
 if (localStorage.getItem('solstice_sound') === '0') soundToggle.checked = false;
 
-// Win modal
+// Win flow
+function showMasterUnlock() {
+  const modal = document.getElementById('win-modal');
+  modal.classList.remove('visible');
+  game.masterUnlocked = true;
+  game.saveProgress();
+  const unlock = document.getElementById('master-unlock-modal');
+  unlock.classList.add('visible');
+}
+
+document.getElementById('master-unlock-close').addEventListener('click', () => {
+  document.getElementById('master-unlock-modal').classList.remove('visible');
+  const next = game.levelId + 1;
+  const nextLevel = LEVELS.find(l => l.id === next);
+  if (nextLevel) {
+    game.loadLevel(next);
+    game.paused = false;
+  } else {
+    window.location.hash = '';
+    game.loadLevel(1);
+    game.paused = false;
+  }
+  updateUI();
+});
+document.getElementById('master-unlock-modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('master-unlock-modal'))
+    document.getElementById('master-unlock-modal').click();
+});
+
+function showGrandmasterUnlock() {
+  const modal = document.getElementById('win-modal');
+  modal.classList.remove('visible');
+  const gmModal = document.getElementById('grandmaster-loading-modal');
+  gmModal.classList.add('visible');
+  let remaining = 30;
+  const countEl = document.getElementById('gm-countdown');
+  const progressEl = document.getElementById('gm-progress');
+  countEl.textContent = remaining;
+  const interval = setInterval(() => {
+    remaining--;
+    countEl.textContent = remaining;
+    progressEl.style.width = ((30 - remaining) / 30 * 100) + '%';
+    if (remaining <= 0) {
+      clearInterval(interval);
+      gmModal.classList.remove('visible');
+      game.grandmasterUnlocked = true;
+      game.saveProgress();
+      const reveal = document.getElementById('grandmaster-reveal-modal');
+      reveal.classList.add('visible');
+    }
+  }, 1000);
+}
+
+document.getElementById('gm-reveal-close').addEventListener('click', () => {
+  document.getElementById('grandmaster-reveal-modal').classList.remove('visible');
+  game.loadLevel(16);
+  game.paused = false;
+  updateUI();
+});
+document.getElementById('grandmaster-reveal-modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('grandmaster-reveal-modal'))
+    document.getElementById('grandmaster-reveal-modal').click();
+});
+
+function showGeniusScreen() {
+  const modal = document.getElementById('win-modal');
+  modal.classList.remove('visible');
+  document.getElementById('genius-modal').classList.add('visible');
+}
+
+document.getElementById('genius-close').addEventListener('click', () => {
+  document.getElementById('genius-modal').classList.remove('visible');
+  game.loadLevel(1);
+  game.paused = false;
+  updateUI();
+});
+document.getElementById('genius-modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('genius-modal'))
+    document.getElementById('genius-modal').click();
+});
+
 function showWinModal(next) {
+  // Check for special unlock screens
+  if (game.levelId === 10 && game.allStandardSolved()) {
+    showMasterUnlock();
+    return;
+  }
+  if (game.levelId === 15 && game.allMasterSolved()) {
+    showGrandmasterUnlock();
+    return;
+  }
+  if (game.levelId === 18) {
+    showGeniusScreen();
+    return;
+  }
+
   const modal = document.getElementById('win-modal');
   const title = document.getElementById('win-title');
   const sub = document.getElementById('win-sub');

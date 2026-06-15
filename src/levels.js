@@ -180,6 +180,157 @@ export const LEVELS = [
       return g;
     }
   },
+  // --- MASTER LEVELS ---
+  {
+    id: 11,
+    name: 'Master\'s Gate',
+    subtitle: 'The first trial of mastery awaits',
+    par: 4,
+    hint: 'Route SUN down the right side and MOON down the left.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 4, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 3, 0, CELL.MOON_RECEPTOR);
+      set(g, 0, 4, CELL.WALL);
+      set(g, 7, 3, CELL.WALL);
+      set(g, 2, 3, CELL.WALL);
+      set(g, 5, 4, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 12,
+    name: 'The Gauntlet',
+    subtitle: 'Run the gauntlet of stone and shadow',
+    par: 4,
+    hint: 'Both beams must pass through the same column.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 3, CELL.SUN_EMITTER);
+      set(g, 7, 4, CELL.SUN_RECEPTOR);
+      set(g, 7, 3, CELL.MOON_EMITTER);
+      set(g, 0, 4, CELL.MOON_RECEPTOR);
+      set(g, 0, 6, CELL.WALL);
+      set(g, 7, 1, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 13,
+    name: 'Mirror Maze',
+    subtitle: 'A labyrinth of reflections',
+    par: 4,
+    hint: 'Route both beams through the intersection.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 3, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 4, 0, CELL.MOON_RECEPTOR);
+      set(g, 0, 4, CELL.WALL);
+      set(g, 7, 3, CELL.WALL);
+      set(g, 2, 3, CELL.WALL);
+      set(g, 5, 4, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 14,
+    name: 'Double Cross',
+    subtitle: 'Paths intertwine in the shadows',
+    par: 5,
+    hint: 'Plan both routes together — one mirror can serve both beams.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 6, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 1, 0, CELL.MOON_RECEPTOR);
+      set(g, 0, 4, CELL.WALL);
+      set(g, 7, 3, CELL.WALL);
+      set(g, 2, 3, CELL.WALL);
+      set(g, 5, 4, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 15,
+    name: 'The Crucible',
+    subtitle: 'Where masters are forged',
+    par: 4,
+    hint: 'Walls block the direct paths. Find an indirect route.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 7, 4, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 0, 3, CELL.MOON_RECEPTOR);
+      set(g, 0, 6, CELL.WALL);
+      set(g, 7, 1, CELL.WALL);
+      set(g, 6, 4, CELL.WALL);
+      set(g, 1, 3, CELL.WALL);
+      return g;
+    }
+  },
+  // --- GRANDMASTER LEVELS ---
+  {
+    id: 16,
+    name: 'Shadow Realm',
+    subtitle: 'Only fragments of light remain',
+    par: 4,
+    hint: 'Diagonal walls force each beam to take a unique path.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 3, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 4, 0, CELL.MOON_RECEPTOR);
+      set(g, 0, 4, CELL.WALL);
+      set(g, 7, 3, CELL.WALL);
+      set(g, 2, 2, CELL.WALL);
+      set(g, 5, 5, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 17,
+    name: 'The Abyss',
+    subtitle: 'Stare into the void and find the path',
+    par: 5,
+    hint: 'Both emitters sit on the same edge. Plan mirror placements outward.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 7, 7, CELL.SUN_RECEPTOR);
+      set(g, 0, 7, CELL.MOON_EMITTER);
+      set(g, 7, 0, CELL.MOON_RECEPTOR);
+      set(g, 0, 3, CELL.WALL);
+      set(g, 0, 4, CELL.WALL);
+      set(g, 0, 5, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 18,
+    name: 'The Impossible',
+    subtitle: 'Only geniuses and dreamers need apply',
+    par: 6,
+    hint: 'Staggered walls create a narrow corridor. Every mirror counts.',
+    build() {
+      const g = emptyGrid();
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 7, 4, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 0, 3, CELL.MOON_RECEPTOR);
+      set(g, 0, 5, CELL.WALL);
+      set(g, 7, 2, CELL.WALL);
+      set(g, 2, 4, CELL.WALL);
+      set(g, 5, 3, CELL.WALL);
+      return g;
+    }
+  },
 ];
 
 export function getLevel(id) {

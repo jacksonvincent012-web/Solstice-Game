@@ -701,4 +701,83 @@ canvas {
 @keyframes demoPulse { from { opacity: 0.6; } to { opacity: 1; } }
 #demo-tip { text-shadow: 0 0 8px rgba(0,255,136,0.3); }
 
+/* Master unlock modal */
+#master-unlock-modal, #grandmaster-loading-modal, #grandmaster-reveal-modal, #genius-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 400;
+  justify-content: center;
+  align-items: center;
+}
+#master-unlock-modal.visible, #grandmaster-loading-modal.visible,
+#grandmaster-reveal-modal.visible, #genius-modal.visible { display: flex; }
+#master-unlock-box, #grandmaster-loading-box, #grandmaster-reveal-box, #genius-box {
+  background: #0d0d22;
+  border: 1px solid #ffd700;
+  border-radius: 6px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90vw;
+  text-align: center;
+  box-shadow: 0 0 80px rgba(255,215,0,0.1);
+  animation: winIn 0.5s ease;
+}
+#master-unlock-box h2, #grandmaster-loading-box h2,
+#grandmaster-reveal-box h2, #genius-box h2 {
+  color: #ffd700;
+  font-size: 18px;
+  letter-spacing: 6px;
+  margin-bottom: 14px;
+}
+#master-unlock-box p, #grandmaster-loading-box p,
+#grandmaster-reveal-box p, #genius-box p {
+  color: #888;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+#master-unlock-box .dim, #grandmaster-loading-box .dim,
+#grandmaster-reveal-box .dim, #genius-box .dim { color: #555; }
+#master-unlock-box .highlight { color: #00ff88; font-size: 13px; letter-spacing: 3px; margin: 12px 0 4px; }
+#master-unlock-box .small, #genius-box .small { color: #444; font-size: 9px; letter-spacing: 1px; }
+.master-badge { font-size: 36px; color: #ffd700; margin: 10px 0; text-shadow: 0 0 20px rgba(255,215,0,0.4); }
+.gm-badge { font-size: 32px; color: #4a90d9; margin: 10px 0; text-shadow: 0 0 20px rgba(74,144,217,0.4); }
+.genius-badge { font-size: 40px; margin: 10px 0; }
+#master-unlock-box button, #grandmaster-reveal-box button, #genius-box button {
+  margin-top: 16px;
+  padding: 10px 36px;
+  border: 1px solid #ffd700;
+  border-radius: 4px;
+  background: transparent;
+  color: #ffd700;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#master-unlock-box button:hover, #grandmaster-reveal-box button:hover, #genius-box button:hover {
+  background: rgba(255,215,0,0.08);
+  box-shadow: 0 0 30px rgba(255,215,0,0.15);
+}
+#grandmaster-reveal-box button { border-color: #4a90d9; color: #4a90d9; }
+#grandmaster-reveal-box button:hover { background: rgba(74,144,217,0.08); box-shadow: 0 0 30px rgba(74,144,217,0.15); }
+.gm-loading-bar {
+  width: 100%;
+  height: 6px;
+  background: #1a1a3a;
+  border-radius: 3px;
+  margin: 16px 0 10px;
+  overflow: hidden;
+}
+.gm-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4a90d9, #7b68ee);
+  border-radius: 3px;
+  transition: width 1s linear;
+}
+
 /* deploy 20260614120536 */
