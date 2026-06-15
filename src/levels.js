@@ -12,7 +12,7 @@ export const LEVELS = [
     name: 'First Light',
     subtitle: 'Place a mirror to route the sunbeam',
     par: 1,
-    hint: 'Use a \\ mirror at the far right to redirect the beam downward.',
+    hint: '\\ mirrors reflect rightward beams downward. / mirrors reflect them upward. Try both orientations.',
     build() {
       const g = emptyGrid();
       set(g, 1, 0, CELL.SUN_EMITTER);
@@ -25,7 +25,7 @@ export const LEVELS = [
     name: 'Two Shadows',
     subtitle: 'Route both sun and moon to their targets',
     par: 3,
-    hint: 'Sun needs \\ at (7,1). Moon needs / at (6,5) and / at (6,7).',
+    hint: 'Toggle between SUN and MOON mode. Each beam follows its own path through the mirrors you place.',
     build() {
       const g = emptyGrid();
       set(g, 1, 0, CELL.SUN_EMITTER);
@@ -40,7 +40,7 @@ export const LEVELS = [
     name: 'Crossings',
     subtitle: 'Beams must cross paths without interfering',
     par: 4,
-    hint: 'Think about where the beams intersect.',
+    hint: 'SUN and MOON beams pass through each other without interference. Plan each route independently.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
