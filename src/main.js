@@ -177,10 +177,10 @@ function gameLoop() {
 
     if (result.bothLit && !game.hasWon) {
       game.hasWon = true;
+      game.paused = true;
       playWin();
 
       // Win celebration particles
-      const cs = CANVAS_SIZE / GRID_SIZE;
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
           const x = Math.random() * CANVAS_SIZE;
@@ -193,19 +193,7 @@ function gameLoop() {
       }
 
       const next = game.unlockNext();
-      setTimeout(() => {
-        if (next <= LEVELS.length) {
-          if (confirm(`Level ${game.levelId} complete! Load Level ${next}?`)) {
-            game.loadLevel(next);
-            updateUI();
-          } else {
-            terminal.open();
-          }
-        } else {
-          terminal.open();
-        }
-        updateUI();
-      }, 800);
+      setTimeout(() => showWinModal(next), 600);
     }
   }
 
@@ -246,6 +234,59 @@ document.getElementById('help-modal').addEventListener('click', (e) => {
     document.getElementById('help-modal').classList.remove('visible');
 });
 
+// Win modal
+function showWinModal(next) {
+  const modal = document.getElementById('win-modal');
+  const icon = document.getElementById('win-icon');
+  const title = document.getElementById('win-title');
+  const sub = document.getElementById('win-sub');
+  const mirrorsEl = document.getElementById('win-mirrors');
+  const nextBtn = document.getElementById('win-next');
+
+  icon.textContent = '\u2728';
+  title.textContent = 'LEVEL ' + game.levelId + ' COMPLETE';
+  sub.textContent = 'You routed the light to both receptors';
+  mirrorsEl.textContent = 'Mirrors used: ' + game.mirrorCount;
+
+  const level = LEVELS.find(l => l.id === game.levelId);
+  const nextLevel = LEVELS.find(l => l.id === next);
+  if (nextLevel) {
+    nextBtn.textContent = 'NEXT: ' + nextLevel.name.toUpperCase();
+    nextBtn.style.display = '';
+  } else {
+    nextBtn.textContent = 'VIEW TERMINAL';
+    nextBtn.style.display = '';
+  }
+
+  modal.classList.add('visible');
+}
+
+document.getElementById('win-next').addEventListener('click', () => {
+  const modal = document.getElementById('win-modal');
+  modal.classList.remove('visible');
+  const next = game.levelId + 1;
+  const nextLevel = LEVELS.find(l => l.id === next);
+  if (nextLevel) {
+    game.loadLevel(next);
+    game.paused = false;
+  } else {
+    terminal.open();
+  }
+  updateUI();
+});
+
+document.getElementById('win-restart').addEventListener('click', () => {
+  document.getElementById('win-modal').classList.remove('visible');
+  game.paused = false;
+  game.resetLevel();
+  updateUI();
+});
+
+document.getElementById('win-terminal').addEventListener('click', () => {
+  document.getElementById('win-modal').classList.remove('visible');
+  terminal.open();
+});
+
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
   if (e.key === 't' || e.key === 'T') {
@@ -255,6 +296,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'r' || e.key === 'R') { game.resetLevel(); updateUI(); }
   if (e.key === 'Escape') {
     document.getElementById('help-modal').classList.remove('visible');
+    document.getElementById('win-modal').classList.remove('visible');
     if (terminal.isOpen) terminal.close();
     if (editor.active) editor.hide();
   }

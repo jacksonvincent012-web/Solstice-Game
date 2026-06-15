@@ -89,6 +89,92 @@ body {
   50% { box-shadow: 0 0 20px rgba(255,215,0,0.2); }
 }
 
+/* Win modal */
+#win-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 250;
+  justify-content: center;
+  align-items: center;
+}
+#win-modal.visible { display: flex; }
+#win-box {
+  background: #0d0d22;
+  border: 1px solid #ffd700;
+  border-radius: 6px;
+  padding: 28px 32px;
+  max-width: 380px;
+  width: 90vw;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(255,215,0,0.08);
+  animation: winIn 0.4s ease;
+}
+@keyframes winIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+#win-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+#win-title {
+  color: #ffd700;
+  font-size: 14px;
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+}
+#win-sub {
+  color: #666;
+  font-size: 10px;
+  margin-bottom: 14px;
+  letter-spacing: 1px;
+}
+#win-stats {
+  margin-bottom: 18px;
+}
+#win-mirrors {
+  color: #555;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+#win-par {
+  color: #555;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-left: 12px;
+}
+#win-par.par-met { color: #00ff88; }
+#win-par.par-exceeded { color: #ff6b35; }
+#win-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#win-actions button {
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 2px;
+  transition: all 0.3s;
+}
+.win-primary {
+  background: transparent;
+  border: 1px solid #ffd700;
+  color: #ffd700;
+}
+.win-primary:hover { background: rgba(255,215,0,0.08); box-shadow: 0 0 20px rgba(255,215,0,0.1); }
+.win-secondary {
+  background: transparent;
+  border: 1px solid #444;
+  color: #777;
+}
+.win-secondary:hover { border-color: #666; color: #aaa; }
+
 /* API key settings */
 #api-key-settings-btn {
   position: fixed;
