@@ -186,11 +186,14 @@ flowchart LR
 |-------|-----------|
 | Language | Vanilla JavaScript (ES Modules) |
 | Rendering | HTML Canvas 2D API |
-| Build | Vite |
+| Styling | CSS3 (Flexbox, Grid, Animations, Custom Properties) |
+| Build | Vite + ESBuild |
 | Audio | Web Audio API (OscillatorNode + GainNode) |
 | AI | Google Gemini API (optional) |
 | Hosting | Netlify CDN |
 | Persistence | localStorage |
+| Documentation | Mermaid (architecture diagrams) |
+| Tooling | Python 3 (level solver) |
 
 ---
 
