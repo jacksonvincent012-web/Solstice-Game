@@ -43,6 +43,7 @@ export const LEVELS = [
       const g = emptyGrid();
       set(g, 2, 0, CELL.SUN_EMITTER);
       set(g, 1, 7, CELL.SUN_RECEPTOR);
+      set(g, 2, 7, CELL.WALL);
       return g;
     }
   },
@@ -64,7 +65,7 @@ export const LEVELS = [
     id: 5,
     name: 'Two Shadows',
     subtitle: 'Route both sun and moon to their targets',
-    par: 3,
+    par: 4,
     hint: 'Toggle between SUN and MOON mode. Each beam follows its own path through the mirrors you place.',
     build() {
       const g = emptyGrid();
@@ -72,6 +73,8 @@ export const LEVELS = [
       set(g, 3, 7, CELL.SUN_RECEPTOR);
       set(g, 5, 7, CELL.MOON_EMITTER);
       set(g, 7, 0, CELL.MOON_RECEPTOR);
+      set(g, 1, 7, CELL.WALL);
+      set(g, 5, 0, CELL.WALL);
       return g;
     }
   },
@@ -79,7 +82,7 @@ export const LEVELS = [
     id: 6,
     name: 'The Split',
     subtitle: 'SUN and MOON take different routes',
-    par: 3,
+    par: 4,
     hint: 'SUN needs a \\ near the right edge. MOON needs a / near the left edge. Plan both paths.',
     build() {
       const g = emptyGrid();
@@ -87,6 +90,8 @@ export const LEVELS = [
       set(g, 4, 7, CELL.SUN_RECEPTOR);
       set(g, 6, 7, CELL.MOON_EMITTER);
       set(g, 3, 0, CELL.MOON_RECEPTOR);
+      set(g, 1, 7, CELL.WALL);
+      set(g, 6, 0, CELL.WALL);
       return g;
     }
   },
@@ -102,6 +107,8 @@ export const LEVELS = [
       set(g, 4, 7, CELL.SUN_RECEPTOR);
       set(g, 7, 7, CELL.MOON_EMITTER);
       set(g, 3, 0, CELL.MOON_RECEPTOR);
+      set(g, 0, 7, CELL.WALL);
+      set(g, 7, 0, CELL.WALL);
       set(g, 2, 2, CELL.WALL);
       set(g, 5, 5, CELL.WALL);
       return g;
@@ -128,7 +135,7 @@ export const LEVELS = [
     id: 9,
     name: 'The Maze',
     subtitle: 'Navigate through corridors of stone',
-    par: 5,
+    par: 4,
     hint: 'Trace each path backward from the receptor.',
     build() {
       const g = emptyGrid();
@@ -153,7 +160,7 @@ export const LEVELS = [
     id: 10,
     name: 'Solstice',
     subtitle: 'The final balance of light and shadow',
-    par: 6,
+    par: 5,
     hint: 'Use both toggle states to verify your solution.',
     build() {
       const g = emptyGrid();
@@ -161,6 +168,8 @@ export const LEVELS = [
       set(g, 5, 7, CELL.SUN_RECEPTOR);
       set(g, 7, 6, CELL.MOON_EMITTER);
       set(g, 2, 0, CELL.MOON_RECEPTOR);
+      set(g, 0, 7, CELL.WALL);
+      set(g, 7, 0, CELL.WALL);
       const walls = [
         [1,2],[1,3],[1,4],[1,5],
         [3,1],[4,1],[5,1],

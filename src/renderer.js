@@ -22,9 +22,11 @@ export class Renderer {
     const dayResults = traceAll(game.grid, true);
     const nightResults = traceAll(game.grid, false);
     const activeResults = game.isDay ? dayResults : nightResults;
+    const hasDay = game.grid.some(row => row.includes(CELL.SUN_EMITTER));
+    const hasNight = game.grid.some(row => row.includes(CELL.MOON_EMITTER));
     const dayLit = dayResults.lit.length > 0;
     const nightLit = nightResults.lit.length > 0;
-    const bothLit = dayLit && nightLit;
+    const bothLit = (!hasDay || dayLit) && (!hasNight || nightLit);
 
     for (let y = 0; y < GRID_SIZE; y++) {
       for (let x = 0; x < GRID_SIZE; x++) {
