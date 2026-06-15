@@ -25,6 +25,12 @@ flowchart LR
     end
 
     GL --> RT --> RD --> PS
+
+    style GL fill:#1a1a3a,stroke:#ffd700,color:#ffd700
+    style RT fill:#1a1a3a,stroke:#4a90d9,color:#4a90d9
+    style RD fill:#1a1a3a,stroke:#7b68ee,color:#7b68ee
+    style PS fill:#1a1a3a,stroke:#00ff88,color:#00ff88
+    style Pipeline fill:#0a0a1a,stroke:#333,color:#888
 ```
 
 ### Supporting Systems
@@ -41,6 +47,12 @@ flowchart TB
 
     IM --> GS --> AU
     GS --> ED
+
+    style IM fill:#1a1a3a,stroke:#ffd700,color:#ffd700
+    style GS fill:#1a1a3a,stroke:#00ff41,color:#00ff41
+    style AU fill:#1a1a3a,stroke:#ff6b35,color:#ff6b35
+    style ED fill:#1a1a3a,stroke:#4a90d9,color:#4a90d9
+    style Systems fill:#0a0a1a,stroke:#333,color:#888
 ```
 
 ### Terminal System
@@ -56,6 +68,11 @@ flowchart LR
 
     TM --> GA
     TM --> DM
+
+    style TM fill:#1a1a3a,stroke:#00ff41,color:#00ff41
+    style GA fill:#1a1a3a,stroke:#7b68ee,color:#7b68ee
+    style DM fill:#1a1a3a,stroke:#555,color:#888
+    style Terminal fill:#0a0a1a,stroke:#333,color:#888
 ```
 
 ---
@@ -77,6 +94,15 @@ flowchart TB
         E --> A
         F --> A
     end
+
+    style A fill:#1a1a3a,stroke:#8888bb,color:#bbb
+    style B fill:#1a1a3a,stroke:#ffd700,color:#ffd700
+    style C fill:#1a1a3a,stroke:#ff4444,color:#ff4444
+    style D fill:#1a1a3a,stroke:#00ff41,color:#00ff41
+    style E fill:#1a1a3a,stroke:#4a90d9,color:#4a90d9
+    style F fill:#1a1a3a,stroke:#4a90d9,color:#4a90d9
+    style G fill:#1a1a3a,stroke:#555,color:#888
+    style RayMarch fill:#0a0a1a,stroke:#333,color:#888
 ```
 
 Mirror reflection rules:
@@ -138,6 +164,12 @@ flowchart LR
         D4["Phase 4<br>Editor + Polish<br>Level editor · JSON export<br>Animated beams · Particles<br>Touch support · Intro screen"]
     end
     D1 --> D2 --> D3 --> D4
+
+    style D1 fill:#1a1a3a,stroke:#ffd700,color:#ffd700
+    style D2 fill:#1a1a3a,stroke:#4a90d9,color:#4a90d9
+    style D3 fill:#1a1a3a,stroke:#00ff41,color:#00ff41
+    style D4 fill:#1a1a3a,stroke:#7b68ee,color:#7b68ee
+    style Dev fill:#0a0a1a,stroke:#333,color:#888
 ```
 
 | Phase | Focus | Key Additions | Snapshot |
@@ -199,6 +231,13 @@ flowchart LR
         DIST --> NETLIFY["Netlify CDN<br>HTTPS · Edge cache<br>Instant rollback"]
         NETLIFY --> LIVE["Production<br>vinny-deploy.netlify.app"]
     end
+
+    style SRC fill:#1a1a3a,stroke:#8888bb,color:#bbb
+    style VITE fill:#1a1a3a,stroke:#7b68ee,color:#7b68ee
+    style DIST fill:#1a1a3a,stroke:#555,color:#888
+    style NETLIFY fill:#1a1a3a,stroke:#00ff41,color:#00ff41
+    style LIVE fill:#1a1a3a,stroke:#ffd700,color:#ffd700
+    style Deploy fill:#0a0a1a,stroke:#333,color:#888
 ```
 
 Build produces a versioned bundle with content-hashed assets for cache busting. The site is served over HTTPS with global edge distribution, instant rollback, and zero server-side runtime.
