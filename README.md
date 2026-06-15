@@ -1,6 +1,6 @@
 # Solstice
 
-**A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, a CRT terminal narrative, and a star-based rating system.**
+**A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, 10 graduated levels, a CRT terminal narrative, undo/redo, and a star-based rating system.**
 
 Built with vanilla JavaScript, rendered on HTML Canvas 2D, with audio synthesis via the Web Audio API and optional AI-powered dialogue through Google Gemini. Deployed as a static site on the Netlify CDN.
 
@@ -144,6 +144,7 @@ flowchart LR
 |-------|-------|---------------|----------|
 | **1** | Core Mechanics | Grid, Canvas renderer, ray tracer, SUN emitter, mirror placement (`/` `\`) | (DAY1) |
 | **2** | Game Systems | MOON emitter, day/night toggle, 5 levels, win detection, level selector, localStorage | (DAY2) |
+| **5** | Level Expansion | 10 levels with graduated difficulty, undo/redo, star rating (1-3), sound settings, first-play demo tutorial | (post-launch) |
 | **3** | Terminal + Audio | CRT terminal, Gemini API, 3-question chat, Web Audio synthesis, Bletchley narrative | (DAY3) |
 | **4** | Editor + Polish | Level editor, particle system, animated beams, intro screen, touch support, responsive CSS | (DAY4) |
 
@@ -179,6 +180,7 @@ flowchart LR
 │   ├── terminal.js         CRT terminal, Gemini API, demo dialogue
 │   ├── editor.js           Level editor, tool palette, JSON export
 │   ├── audio.js            Web Audio sound synthesis
+│   ├── demo.js             First-play animated tutorial
 │   ├── constants.js        Enums, colors, grid dimensions
 │   └── main.css            Full stylesheet, responsive media queries
 └── README.md

@@ -22,6 +22,46 @@ export const LEVELS = [
   },
   {
     id: 2,
+    name: 'Second Glance',
+    subtitle: 'Try the other mirror orientation',
+    par: 1,
+    hint: 'A / mirror sends a rightward beam upward. Place one to redirect the beam to the receptor.',
+    build() {
+      const g = emptyGrid();
+      set(g, 2, 0, CELL.SUN_EMITTER);
+      set(g, 0, 6, CELL.SUN_RECEPTOR);
+      return g;
+    }
+  },
+  {
+    id: 3,
+    name: 'Crossroads',
+    subtitle: 'Chain two mirrors to bend the beam twice',
+    par: 2,
+    hint: 'One mirror turns the beam, another turns it again. Both mirrors face the same way here.',
+    build() {
+      const g = emptyGrid();
+      set(g, 2, 0, CELL.SUN_EMITTER);
+      set(g, 1, 7, CELL.SUN_RECEPTOR);
+      return g;
+    }
+  },
+  {
+    id: 4,
+    name: 'Detour',
+    subtitle: 'Navigate around a stone wall',
+    par: 2,
+    hint: 'A wall blocks the direct path. Turn downward before reaching it, then turn right again.',
+    build() {
+      const g = emptyGrid();
+      set(g, 2, 0, CELL.SUN_EMITTER);
+      set(g, 4, 6, CELL.SUN_RECEPTOR);
+      set(g, 2, 5, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 5,
     name: 'Two Shadows',
     subtitle: 'Route both sun and moon to their targets',
     par: 3,
@@ -36,7 +76,22 @@ export const LEVELS = [
     }
   },
   {
-    id: 3,
+    id: 6,
+    name: 'The Split',
+    subtitle: 'SUN and MOON take different routes',
+    par: 3,
+    hint: 'SUN needs a \\ near the right edge. MOON needs a / near the left edge. Plan both paths.',
+    build() {
+      const g = emptyGrid();
+      set(g, 1, 0, CELL.SUN_EMITTER);
+      set(g, 4, 7, CELL.SUN_RECEPTOR);
+      set(g, 6, 7, CELL.MOON_EMITTER);
+      set(g, 3, 0, CELL.MOON_RECEPTOR);
+      return g;
+    }
+  },
+  {
+    id: 7,
     name: 'Crossings',
     subtitle: 'Beams must cross paths without interfering',
     par: 4,
@@ -53,7 +108,24 @@ export const LEVELS = [
     }
   },
   {
-    id: 4,
+    id: 8,
+    name: 'The Divide',
+    subtitle: 'Two walls split the board into passages',
+    par: 4,
+    hint: 'SUN goes right and turns down. MOON goes left and turns up. Plan two turns per path.',
+    build() {
+      const g = emptyGrid();
+      set(g, 1, 0, CELL.SUN_EMITTER);
+      set(g, 4, 7, CELL.SUN_RECEPTOR);
+      set(g, 6, 7, CELL.MOON_EMITTER);
+      set(g, 3, 0, CELL.MOON_RECEPTOR);
+      set(g, 1, 5, CELL.WALL); set(g, 1, 6, CELL.WALL);
+      set(g, 6, 4, CELL.WALL);
+      return g;
+    }
+  },
+  {
+    id: 9,
     name: 'The Maze',
     subtitle: 'Navigate through corridors of stone',
     par: 5,
@@ -78,7 +150,7 @@ export const LEVELS = [
     }
   },
   {
-    id: 5,
+    id: 10,
     name: 'Solstice',
     subtitle: 'The final balance of light and shadow',
     par: 6,
