@@ -1,6 +1,6 @@
 # Solstice
 
-**A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, and a CRT terminal narrative.**
+**A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, a CRT terminal narrative, and a star-based rating system.**
 
 Built with vanilla JavaScript, rendered on HTML Canvas 2D, with audio synthesis via the Web Audio API and optional AI-powered dialogue through Google Gemini. Deployed as a static site on the Netlify CDN.
 
@@ -34,7 +34,7 @@ flowchart TB
     subgraph Systems[Supporting Systems]
         direction TB
         IM["INPUT<br>input.js<br>Mouse + Touch<br>Long-press gesture<br>Coord mapping"]
-        GS["GAME STATE<br>game.js<br>8x8 grid state<br>Level load / reset<br>Save / load progress<br>Win detection"]
+        GS["GAME STATE<br>game.js<br>8x8 grid state<br>Undo / redo history<br>Star rating (1-3)<br>Level load / reset<br>Save / load progress<br>Win detection"]
         AU["AUDIO<br>audio.js<br>Web Audio synthesis<br>Osc + Gain nodes<br>5 sound effects<br>Zero audio files"]
         ED["EDITOR<br>editor.js<br>Tool palette<br>Grid painting<br>JSON export"]
     end
@@ -107,6 +107,12 @@ Mirror arrangements can create infinite loops (e.g., two `/` mirrors facing each
 ### Dual-Pass Simulation
 Two complete ray traces execute per frame — one for SUN emitters/receptors, one for MOON. Both results persist in memory simultaneously so the renderer can show the appropriate beam set and detect cross-mode wins. This is not a toggle-switch; the inactive mode's result is still computed for win validation.
 
+### Undo/Redo via Grid Snapshots
+The undo system stores full grid snapshots before each mutation. Each snapshot is a deep copy of the 8×8 grid (64 integers). History is truncated on new actions after an undo, and cleared on level load. This keeps the implementation simple — no diffing or inverse operations — at minimal memory cost (~2 KB per 100 snapshots for 64 cells × 4 bytes).
+
+### Star Rating by Par
+Each level defines a `par` (minimum mirror count to solve). The player earns 3 stars if their mirror count ≤ par, 2 stars if ≤ par + 2, and 1 star otherwise. The highest star rating achieved per level is persisted in localStorage alongside the solved set.
+
 ### Rising-Edge Sound Triggers
 Audio effects for receptor activation use a state comparison pattern: `currentLit && !previousLit`. The previous state must update *after* the comparison, not before — a sequence bug that suppresses sound if reversed.
 
@@ -159,8 +165,8 @@ flowchart LR
 ├── package.json            Vite build configuration
 ├── vite.config.js
 ├── src/
-│   ├── main.js             Game loop, UI updates, event wiring
-│   ├── game.js             State machine, level loading, save/load
+│   ├── main.js             Game loop, UI updates, event wiring, win modal, settings
+│   ├── game.js             State machine, undo/redo, star rating, level loading, save/load
 │   ├── levels.js           Level definitions (build functions)
 │   ├── raytracer.js        Ray marching engine, mirror reflection
 │   ├── renderer.js         Canvas draw: cells, beams, particles
