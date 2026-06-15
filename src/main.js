@@ -3,6 +3,7 @@ import { Renderer } from './renderer.js';
 import InputManager from './input.js';
 import Terminal from './terminal.js';
 import LevelEditor from './editor.js';
+import DemoPlayer from './demo.js';
 import { ParticleSystem } from './particles.js';
 import { LEVELS } from './levels.js';
 import { playPlace, playRemove, playToggle, playWin, playReceptor } from './audio.js';
@@ -15,6 +16,7 @@ const renderer = new Renderer(canvas, particles);
 const input = new InputManager(canvas, game, renderer);
 const terminal = new Terminal(document.getElementById('terminal-overlay'));
 const editor = new LevelEditor(document.getElementById('editor-container'), game, renderer);
+const demo = new DemoPlayer(canvas, game, renderer);
 
 // Intro screen
 const introOverlay = document.getElementById('intro-overlay');
@@ -75,6 +77,13 @@ document.getElementById('intro-start').addEventListener('click', () => {
     introDone = true;
     game.loadLevel(game.levelId);
     updateUI();
+    if (!localStorage.getItem('solstice_demo_done')) {
+      demo.playLevel1(() => {
+        localStorage.setItem('solstice_demo_done', '1');
+        game.paused = false;
+        updateUI();
+      });
+    }
   }, 800);
 });
 
@@ -161,13 +170,14 @@ function updateUI() {
 }
 
 function gameLoop() {
-  if (!game.paused && !introDone) {
+  if (!introDone) {
     requestAnimationFrame(gameLoop);
     return;
   }
 
-  if (!game.paused) {
-    const result = renderer.draw(game, input.hoverCell);
+  if (!game.paused || demo.active) {
+    const result = renderer.draw(game, demo.active ? null : input.hoverCell);
+    if (demo.active) { updateUI(); requestAnimationFrame(gameLoop); return; }
 
     if (result.dayLit && !prevDayLit) playReceptor();
     if (result.nightLit && !prevNightLit) playReceptor();

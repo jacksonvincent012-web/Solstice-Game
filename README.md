@@ -107,6 +107,9 @@ Mirror arrangements can create infinite loops (e.g., two `/` mirrors facing each
 ### Dual-Pass Simulation
 Two complete ray traces execute per frame — one for SUN emitters/receptors, one for MOON. Both results persist in memory simultaneously so the renderer can show the appropriate beam set and detect cross-mode wins. This is not a toggle-switch; the inactive mode's result is still computed for win validation.
 
+### First-Play Demo
+On first launch, a brief animated demo plays on level 1. It highlights a cell, places a `\` mirror, and shows the beam reaching the receptor — teaching the core click → place → reflect cycle without text. A `localStorage` flag prevents replay.
+
 ### Undo/Redo via Grid Snapshots
 The undo system stores full grid snapshots before each mutation. Each snapshot is a deep copy of the 8×8 grid (64 integers). History is truncated on new actions after an undo, and cleared on level load. This keeps the implementation simple — no diffing or inverse operations — at minimal memory cost (~2 KB per 100 snapshots for 64 cells × 4 bytes).
 
@@ -167,6 +170,7 @@ flowchart LR
 ├── src/
 │   ├── main.js             Game loop, UI updates, event wiring, win modal, settings
 │   ├── game.js             State machine, undo/redo, star rating, level loading, save/load
+│   ├── demo.js             First-play tutorial: animates a mirror placement
 │   ├── levels.js           Level definitions (build functions)
 │   ├── raytracer.js        Ray marching engine, mirror reflection
 │   ├── renderer.js         Canvas draw: cells, beams, particles

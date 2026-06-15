@@ -696,4 +696,9 @@ canvas {
   #status { width: 100%; text-align: center; }
 }
 
+/* Demo overlay */
+#demo-hl { animation: demoPulse 0.8s ease-in-out infinite alternate; }
+@keyframes demoPulse { from { opacity: 0.6; } to { opacity: 1; } }
+#demo-tip { text-shadow: 0 0 8px rgba(0,255,136,0.3); }
+
 /* deploy 20260614120536 */
