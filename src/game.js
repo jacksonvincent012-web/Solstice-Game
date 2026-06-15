@@ -1,9 +1,24 @@
 import { GRID_SIZE } from './constants.js';
 import { getLevelGrid, getLevel, LEVELS } from './levels.js';
 
-export const STANDARD_IDS = [1,2,3,4,5,6,7,8,9,10];
-export const MASTER_IDS = [11,12,13,14,15];
-export const GRANDMASTER_IDS = [16,17,18];
+export const BEGINNER_IDS = [1, 2];
+export const BASIC_IDS = [3, 4];
+export const AVERAGE_IDS = [5, 6, 7, 8, 9];
+export const EXPERT_IDS = [10];
+export const MASTER_IDS = [11, 12, 13, 14, 15, 16];
+export const GRANDMASTER_IDS = [17];
+export const GREAT_GRANDMASTER_IDS = [18];
+
+export function getTierName(id) {
+  if (BEGINNER_IDS.includes(id)) return 'BEGINNER';
+  if (BASIC_IDS.includes(id)) return 'BASIC';
+  if (AVERAGE_IDS.includes(id)) return 'AVERAGE';
+  if (EXPERT_IDS.includes(id)) return 'EXPERT';
+  if (MASTER_IDS.includes(id)) return 'MASTER';
+  if (GRANDMASTER_IDS.includes(id)) return 'GRAND MASTER';
+  if (GREAT_GRANDMASTER_IDS.includes(id)) return 'GREAT GRAND MASTER';
+  return '';
+}
 
 export default class Game {
   constructor() {
@@ -17,6 +32,7 @@ export default class Game {
     this.stars = {};
     this.masterUnlocked = false;
     this.grandmasterUnlocked = false;
+    this.greatGrandmasterUnlocked = false;
     this.loadProgress();
     this.loadLevel(this.levelId);
   }
@@ -41,6 +57,7 @@ export default class Game {
       this.stars = data.stars || {};
       this.masterUnlocked = !!data.masterUnlocked;
       this.grandmasterUnlocked = !!data.grandmasterUnlocked;
+      this.greatGrandmasterUnlocked = !!data.greatGrandmasterUnlocked;
     } catch { this.solved = new Set(); this.stars = {}; }
   }
 
@@ -51,6 +68,7 @@ export default class Game {
       stars: this.stars,
       masterUnlocked: this.masterUnlocked,
       grandmasterUnlocked: this.grandmasterUnlocked,
+      greatGrandmasterUnlocked: this.greatGrandmasterUnlocked,
     }));
   }
 
@@ -75,8 +93,8 @@ export default class Game {
     return 1;
   }
 
-  allStandardSolved() {
-    return STANDARD_IDS.every(id => this.solved.has(id));
+  allPreMasterSolved() {
+    return [...BEGINNER_IDS, ...BASIC_IDS, ...AVERAGE_IDS, ...EXPERT_IDS].every(id => this.solved.has(id));
   }
 
   allMasterSolved() {
@@ -87,8 +105,17 @@ export default class Game {
     return GRANDMASTER_IDS.every(id => this.solved.has(id));
   }
 
+  allGreatGrandmasterSolved() {
+    return GREAT_GRANDMASTER_IDS.every(id => this.solved.has(id));
+  }
+
+  isMaster(id) { return MASTER_IDS.includes(id); }
+  isGrandmaster(id) { return GRANDMASTER_IDS.includes(id); }
+  isGreatGrandmaster(id) { return GREAT_GRANDMASTER_IDS.includes(id); }
+
   isLevelAccessible(id) {
-    if (STANDARD_IDS.includes(id)) {
+    const preMaster = [...BEGINNER_IDS, ...BASIC_IDS, ...AVERAGE_IDS, ...EXPERT_IDS];
+    if (preMaster.includes(id)) {
       return id === 1 || this.solved.has(id - 1);
     }
     if (MASTER_IDS.includes(id)) {
@@ -97,7 +124,11 @@ export default class Game {
     }
     if (GRANDMASTER_IDS.includes(id)) {
       if (!this.grandmasterUnlocked) return false;
-      return id === 16 || this.solved.has(id - 1);
+      return id === 17 || this.solved.has(id - 1);
+    }
+    if (GREAT_GRANDMASTER_IDS.includes(id)) {
+      if (!this.greatGrandmasterUnlocked) return false;
+      return id === 18 || this.solved.has(id - 1);
     }
     return true;
   }

@@ -1,4 +1,4 @@
-import Game, { STANDARD_IDS, MASTER_IDS, GRANDMASTER_IDS } from './game.js';
+import Game, { BEGINNER_IDS, BASIC_IDS, AVERAGE_IDS, EXPERT_IDS, MASTER_IDS, GRANDMASTER_IDS, GREAT_GRANDMASTER_IDS, getTierName } from './game.js';
 import { Renderer } from './renderer.js';
 import InputManager from './input.js';
 import Terminal from './terminal.js';
@@ -153,18 +153,23 @@ function updateUI() {
 
   const level = LEVELS.find(l => l.id === game.levelId);
   if (level) {
-    const prefix = STANDARD_IDS.includes(level.id) ? '' : MASTER_IDS.includes(level.id) ? 'MASTER ' : 'GM ';
-    levelName.textContent = `${prefix}Level ${level.id}: ${level.name}`;
+    const prefix = getTierName(level.id);
+    levelName.textContent = `${prefix} ${level.id}: ${level.name}`;
     levelSub.textContent = level.subtitle;
   }
 
   levelSelect.innerHTML = '';
-  const standardFrag = buildLevelOpts(STANDARD_IDS, 'STANDARD', true);
-  if (standardFrag.hasChildNodes()) levelSelect.appendChild(standardFrag);
-  const masterFrag = buildLevelOpts(MASTER_IDS, 'MASTER', game.masterUnlocked);
-  if (masterFrag.hasChildNodes()) levelSelect.appendChild(masterFrag);
-  const gmFrag = buildLevelOpts(GRANDMASTER_IDS, 'GRANDMASTER', game.grandmasterUnlocked);
-  if (gmFrag.hasChildNodes()) levelSelect.appendChild(gmFrag);
+  const append = (ids, label, unlocked) => {
+    const frag = buildLevelOpts(ids, label, unlocked);
+    if (frag.hasChildNodes()) levelSelect.appendChild(frag);
+  };
+  append(BEGINNER_IDS, 'BEGINNER', true);
+  append(BASIC_IDS, 'BASIC', true);
+  append(AVERAGE_IDS, 'AVERAGE', true);
+  append(EXPERT_IDS, 'EXPERT', true);
+  append(MASTER_IDS, 'MASTER', game.masterUnlocked);
+  append(GRANDMASTER_IDS, 'GRAND MASTER', game.grandmasterUnlocked);
+  append(GREAT_GRANDMASTER_IDS, 'GREAT GRAND MASTER', game.greatGrandmasterUnlocked);
 
   const dayLit = prevDayLit;
   const nightLit = prevNightLit;
@@ -333,13 +338,32 @@ function showGrandmasterUnlock() {
 
 document.getElementById('gm-reveal-close').addEventListener('click', () => {
   document.getElementById('grandmaster-reveal-modal').classList.remove('visible');
-  game.loadLevel(16);
+  game.loadLevel(17);
   game.paused = false;
   updateUI();
 });
 document.getElementById('grandmaster-reveal-modal').addEventListener('click', (e) => {
   if (e.target === document.getElementById('grandmaster-reveal-modal'))
     document.getElementById('grandmaster-reveal-modal').click();
+});
+
+function showGreatGrandmasterUnlock() {
+  const modal = document.getElementById('win-modal');
+  modal.classList.remove('visible');
+  game.greatGrandmasterUnlocked = true;
+  game.saveProgress();
+  document.getElementById('great-grandmaster-reveal-modal').classList.add('visible');
+}
+
+document.getElementById('ggm-reveal-close').addEventListener('click', () => {
+  document.getElementById('great-grandmaster-reveal-modal').classList.remove('visible');
+  game.loadLevel(18);
+  game.paused = false;
+  updateUI();
+});
+document.getElementById('great-grandmaster-reveal-modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('great-grandmaster-reveal-modal'))
+    document.getElementById('great-grandmaster-reveal-modal').click();
 });
 
 function showGeniusScreen() {
@@ -360,13 +384,16 @@ document.getElementById('genius-modal').addEventListener('click', (e) => {
 });
 
 function showWinModal(next) {
-  // Check for special unlock screens
-  if (game.levelId === 10 && game.allStandardSolved()) {
+  if (game.levelId === 10 && game.allPreMasterSolved()) {
     showMasterUnlock();
     return;
   }
-  if (game.levelId === 15 && game.allMasterSolved()) {
+  if (game.levelId === 16 && game.allMasterSolved()) {
     showGrandmasterUnlock();
+    return;
+  }
+  if (game.levelId === 17) {
+    showGreatGrandmasterUnlock();
     return;
   }
   if (game.levelId === 18) {
