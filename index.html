@@ -46,23 +46,47 @@
   <div id="bottom-bar">
     <span id="mirror-count">Mirrors: 0</span>
     <span id="status">Route the light to the receptor</span>
+    <button id="settings-btn">&#x2699;</button>
     <button id="help-btn">?</button>
   </div>
 </div>
 
 <div id="win-modal">
   <div id="win-box">
-    <div id="win-icon"></div>
     <h2 id="win-title">LEVEL COMPLETE</h2>
+    <div id="win-stars"></div>
     <p id="win-sub">You routed the light to both receptors</p>
     <div id="win-stats">
       <span id="win-mirrors">Mirrors used: 0</span>
+      <span id="win-par"></span>
     </div>
     <div id="win-actions">
       <button id="win-next" class="win-primary">NEXT LEVEL</button>
       <button id="win-restart" class="win-secondary">RETRY</button>
       <button id="win-terminal" class="win-secondary">TERMINAL</button>
     </div>
+  </div>
+</div>
+
+<div id="settings-modal">
+  <div id="settings-box">
+    <h3>SETTINGS</h3>
+    <div class="setting-row">
+      <span class="setting-label">Sound</span>
+      <label class="toggle">
+        <input type="checkbox" id="sound-toggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <p id="settings-shortcuts">
+      <span class="hl">Keyboard:</span>
+      <span class="key">T</span> toggle &nbsp;
+      <span class="key">R</span> reset &nbsp;
+      <span class="key">Z</span> undo &nbsp;
+      <span class="key">Shift+Z</span> redo &nbsp;
+      <span class="key">Esc</span> close
+    </p>
+    <button class="close-btn" id="settings-close">OK</button>
   </div>
 </div>
 
@@ -74,7 +98,7 @@
     <p>Toggle between <span class="key">SUN</span> and <span class="key">MOON</span> mode. Both receptors need to be lit at once to win.</p>
     <p>Each level gives limited mirrors &mdash; plan your layout.</p>
     <p><span class="hl">EDITOR</span> lets you build custom levels.</p>
-    <p><span class="hl">Keyboard:</span> <span class="key">T</span> toggle, <span class="key">R</span> reset, <span class="key">Esc</span> close.</p>
+    <p><span class="hl">Keyboard:</span> <span class="key">T</span> toggle, <span class="key">R</span> reset, <span class="key">Ctrl+Z</span> undo, <span class="key">Ctrl+Shift+Z</span> redo, <span class="key">Esc</span> close.</p>
     <button class="close-btn" id="help-close">OK</button>
   </div>
 </div>

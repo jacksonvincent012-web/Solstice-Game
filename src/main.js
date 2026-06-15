@@ -234,19 +234,46 @@ document.getElementById('help-modal').addEventListener('click', (e) => {
     document.getElementById('help-modal').classList.remove('visible');
 });
 
+document.getElementById('settings-btn').addEventListener('click', () => {
+  document.getElementById('settings-modal').classList.add('visible');
+});
+document.getElementById('settings-close').addEventListener('click', () => {
+  document.getElementById('settings-modal').classList.remove('visible');
+});
+document.getElementById('settings-modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('settings-modal'))
+    document.getElementById('settings-modal').classList.remove('visible');
+});
+document.getElementById('sound-toggle').addEventListener('change', (e) => {
+  localStorage.setItem('solstice_sound', e.target.checked ? '1' : '0');
+});
+const soundToggle = document.getElementById('sound-toggle');
+if (localStorage.getItem('solstice_sound') === '0') soundToggle.checked = false;
+
 // Win modal
 function showWinModal(next) {
   const modal = document.getElementById('win-modal');
-  const icon = document.getElementById('win-icon');
   const title = document.getElementById('win-title');
   const sub = document.getElementById('win-sub');
   const mirrorsEl = document.getElementById('win-mirrors');
+  const parEl = document.getElementById('win-par');
+  const starsEl = document.getElementById('win-stars');
   const nextBtn = document.getElementById('win-next');
 
-  icon.textContent = '\u2728';
   title.textContent = 'LEVEL ' + game.levelId + ' COMPLETE';
   sub.textContent = 'You routed the light to both receptors';
   mirrorsEl.textContent = 'Mirrors used: ' + game.mirrorCount;
+
+  const par = game.getPar();
+  const stars = game.getStars();
+  parEl.textContent = 'Par: ' + par;
+  starsEl.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const span = document.createElement('span');
+    span.textContent = '\u2605';
+    span.className = i < stars ? 'star filled' : 'star empty';
+    starsEl.appendChild(span);
+  }
 
   const level = LEVELS.find(l => l.id === game.levelId);
   const nextLevel = LEVELS.find(l => l.id === next);
@@ -294,9 +321,18 @@ document.addEventListener('keydown', (e) => {
     game.toggleDay(); playToggle(); updateUI();
   }
   if (e.key === 'r' || e.key === 'R') { game.resetLevel(); updateUI(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+    e.preventDefault();
+    if (game.undo()) { renderer.dirty = true; updateUI(); }
+  }
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'z' && e.shiftKey || e.key === 'Z' && e.shiftKey || e.key === 'y')) {
+    e.preventDefault();
+    if (game.redo()) { renderer.dirty = true; updateUI(); }
+  }
   if (e.key === 'Escape') {
     document.getElementById('help-modal').classList.remove('visible');
     document.getElementById('win-modal').classList.remove('visible');
+    document.getElementById('settings-modal').classList.remove('visible');
     if (terminal.isOpen) terminal.close();
     if (editor.active) editor.hide();
   }

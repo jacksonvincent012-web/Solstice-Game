@@ -145,8 +145,10 @@ body {
   letter-spacing: 1px;
   margin-left: 12px;
 }
-#win-par.par-met { color: #00ff88; }
-#win-par.par-exceeded { color: #ff6b35; }
+#win-stars { margin-bottom: 10px; }
+#win-stars .star { font-size: 28px; margin: 0 3px; }
+#win-stars .star.filled { color: #ffd700; text-shadow: 0 0 10px rgba(255,215,0,0.5); }
+#win-stars .star.empty { color: #333; }
 #win-actions {
   display: flex;
   gap: 8px;
@@ -426,6 +428,21 @@ canvas {
 }
 #help-btn:hover { border-color: #666; color: #999; }
 
+#settings-btn {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #333;
+  border-radius: 50%;
+  background: #111;
+  color: #555;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  line-height: 1;
+}
+#settings-btn:hover { border-color: #666; color: #999; }
+
 /* Help modal */
 #help-modal {
   display: none;
@@ -462,6 +479,68 @@ canvas {
   letter-spacing: 2px;
 }
 #help-box .close-btn:hover { background: #1a1a1a; border-color: #888; }
+
+/* Settings modal */
+#settings-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 300;
+  justify-content: center;
+  align-items: center;
+}
+#settings-modal.visible { display: flex; }
+#settings-box {
+  background: #111;
+  border: 1px solid #333;
+  padding: 24px 28px;
+  border-radius: 4px;
+  max-width: 400px;
+  width: 90vw;
+  text-align: center;
+}
+#settings-box h3 { color: #ffd700; font-size: 11px; letter-spacing: 3px; margin-bottom: 14px; }
+.setting-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.setting-label { color: #888; font-size: 10px; letter-spacing: 1px; }
+.toggle { position: relative; display: inline-block; width: 36px; height: 20px; }
+.toggle input { display: none; }
+.slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: #333; border-radius: 20px;
+  transition: 0.3s;
+}
+.slider::before {
+  content: ''; position: absolute; left: 3px; bottom: 3px;
+  width: 14px; height: 14px; background: #666; border-radius: 50%;
+  transition: 0.3s;
+}
+.toggle input:checked + .slider { background: #1a3a1a; }
+.toggle input:checked + .slider::before { background: #00ff41; transform: translateX(16px); }
+#settings-shortcuts { color: #555; font-size: 9px; line-height: 1.8; margin-bottom: 14px; }
+#settings-shortcuts .hl { color: #888; }
+#settings-shortcuts .key {
+  display: inline-block; border: 1px solid #333; padding: 1px 5px; border-radius: 3px;
+  font-size: 8px; color: #888; margin: 0 1px;
+}
+#settings-box .close-btn {
+  padding: 6px 20px;
+  border: 1px solid #555;
+  border-radius: 3px;
+  background: transparent;
+  color: #aaa;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+#settings-box .close-btn:hover { background: #1a1a1a; border-color: #888; }
 
 /* Terminal */
 #terminal-overlay {
@@ -609,6 +688,7 @@ canvas {
   #mirror-count { font-size: 8px; }
   #mode-label { font-size: 8px; letter-spacing: 2px; }
   #help-btn { width: 22px; height: 22px; font-size: 10px; }
+  #settings-btn { width: 22px; height: 22px; font-size: 12px; }
   #api-key-settings-btn { top: 6px; right: 6px; width: 28px; height: 28px; font-size: 12px; }
 }
 @media (max-width: 400px) {
