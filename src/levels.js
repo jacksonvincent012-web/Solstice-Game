@@ -213,93 +213,118 @@ export const LEVELS = [
   {
     id: 11,
     name: 'Master\'s Gate',
-    subtitle: 'The first trial of mastery awaits',
-    par: 4,
-    hint: 'Route SUN down the right side and MOON down the left.',
+    subtitle: 'The corridors narrow — think before you place',
+    par: 5,
+    hint: 'Walls cut off the obvious routes. Trace each beam from emitter to receptor before placing anything.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
-      set(g, 4, 7, CELL.SUN_RECEPTOR);
+      set(g, 5, 7, CELL.SUN_RECEPTOR);
       set(g, 7, 7, CELL.MOON_EMITTER);
-      set(g, 3, 0, CELL.MOON_RECEPTOR);
-      set(g, 0, 4, CELL.WALL);
-      set(g, 7, 3, CELL.WALL);
-      set(g, 2, 3, CELL.WALL);
-      set(g, 5, 4, CELL.WALL);
+      set(g, 2, 0, CELL.MOON_RECEPTOR);
+      // Horizontal wall barriers forcing beams through specific rows
+      set(g, 0, 2, CELL.WALL); set(g, 0, 3, CELL.WALL); set(g, 0, 4, CELL.WALL);
+      set(g, 2, 5, CELL.WALL); set(g, 2, 6, CELL.WALL);
+      set(g, 3, 1, CELL.WALL); set(g, 3, 2, CELL.WALL);
+      set(g, 4, 4, CELL.WALL); set(g, 4, 5, CELL.WALL);
+      set(g, 5, 2, CELL.WALL); set(g, 5, 3, CELL.WALL);
+      set(g, 7, 1, CELL.WALL); set(g, 7, 2, CELL.WALL); set(g, 7, 3, CELL.WALL);
       return g;
     }
   },
   {
     id: 12,
     name: 'The Gauntlet',
-    subtitle: 'Run the gauntlet of stone and shadow',
-    par: 4,
-    hint: 'Both beams must pass through the same column.',
+    subtitle: 'Run the gauntlet — walls block every shortcut',
+    par: 5,
+    hint: 'Both beams must navigate the same central zone. One mirror position can redirect both.',
     build() {
       const g = emptyGrid();
-      set(g, 0, 3, CELL.SUN_EMITTER);
-      set(g, 7, 4, CELL.SUN_RECEPTOR);
-      set(g, 7, 3, CELL.MOON_EMITTER);
-      set(g, 0, 4, CELL.MOON_RECEPTOR);
-      set(g, 0, 6, CELL.WALL);
-      set(g, 7, 1, CELL.WALL);
+      set(g, 0, 1, CELL.SUN_EMITTER);
+      set(g, 6, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 6, CELL.MOON_EMITTER);
+      set(g, 1, 0, CELL.MOON_RECEPTOR);
+      // Interlocking wall pattern — forces beams through centre
+      set(g, 0, 4, CELL.WALL); set(g, 0, 5, CELL.WALL);
+      set(g, 1, 3, CELL.WALL); set(g, 1, 6, CELL.WALL);
+      set(g, 2, 2, CELL.WALL); set(g, 2, 5, CELL.WALL);
+      set(g, 3, 4, CELL.WALL); set(g, 3, 7, CELL.WALL);
+      set(g, 4, 0, CELL.WALL); set(g, 4, 3, CELL.WALL);
+      set(g, 5, 2, CELL.WALL); set(g, 5, 5, CELL.WALL);
+      set(g, 6, 1, CELL.WALL); set(g, 6, 4, CELL.WALL);
+      set(g, 7, 3, CELL.WALL);
       return g;
     }
   },
   {
     id: 13,
     name: 'Mirror Maze',
-    subtitle: 'A labyrinth of reflections',
-    par: 4,
-    hint: 'Route both beams through the intersection.',
+    subtitle: 'The maze has no obvious entrance',
+    par: 5,
+    hint: 'Count available cells per row. Most are blocked — the open ones are your only options.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
-      set(g, 3, 7, CELL.SUN_RECEPTOR);
+      set(g, 4, 7, CELL.SUN_RECEPTOR);
       set(g, 7, 7, CELL.MOON_EMITTER);
-      set(g, 4, 0, CELL.MOON_RECEPTOR);
-      set(g, 0, 4, CELL.WALL);
-      set(g, 7, 3, CELL.WALL);
-      set(g, 2, 3, CELL.WALL);
-      set(g, 5, 4, CELL.WALL);
+      set(g, 3, 0, CELL.MOON_RECEPTOR);
+      // Very dense wall pattern — few cells remain open
+      set(g, 0, 3, CELL.WALL); set(g, 0, 4, CELL.WALL); set(g, 0, 6, CELL.WALL);
+      set(g, 1, 2, CELL.WALL); set(g, 1, 5, CELL.WALL); set(g, 1, 7, CELL.WALL);
+      set(g, 2, 1, CELL.WALL); set(g, 2, 4, CELL.WALL); set(g, 2, 6, CELL.WALL);
+      set(g, 3, 2, CELL.WALL); set(g, 3, 5, CELL.WALL);
+      set(g, 4, 1, CELL.WALL); set(g, 4, 3, CELL.WALL); set(g, 4, 6, CELL.WALL);
+      set(g, 5, 2, CELL.WALL); set(g, 5, 4, CELL.WALL);
+      set(g, 6, 1, CELL.WALL); set(g, 6, 5, CELL.WALL); set(g, 6, 7, CELL.WALL);
+      set(g, 7, 2, CELL.WALL); set(g, 7, 4, CELL.WALL);
       return g;
     }
   },
   {
     id: 14,
     name: 'Double Cross',
-    subtitle: 'Paths intertwine in the shadows',
-    par: 5,
-    hint: 'Plan both routes together — one mirror can serve both beams.',
+    subtitle: 'Both beams fight for the same space',
+    par: 6,
+    hint: 'Shared mirrors are essential — a mirror that serves SUN will also redirect MOON. Plan collisions deliberately.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
-      set(g, 6, 7, CELL.SUN_RECEPTOR);
-      set(g, 7, 7, CELL.MOON_EMITTER);
-      set(g, 1, 0, CELL.MOON_RECEPTOR);
-      set(g, 0, 4, CELL.WALL);
-      set(g, 7, 3, CELL.WALL);
-      set(g, 2, 3, CELL.WALL);
-      set(g, 5, 4, CELL.WALL);
+      set(g, 7, 6, CELL.SUN_RECEPTOR);
+      set(g, 0, 7, CELL.MOON_EMITTER);
+      set(g, 7, 1, CELL.MOON_RECEPTOR);
+      // Symmetrical dense walls — forces beams to cross through centre
+      set(g, 0, 3, CELL.WALL); set(g, 0, 4, CELL.WALL);
+      set(g, 1, 2, CELL.WALL); set(g, 1, 5, CELL.WALL);
+      set(g, 2, 1, CELL.WALL); set(g, 2, 3, CELL.WALL); set(g, 2, 4, CELL.WALL); set(g, 2, 6, CELL.WALL);
+      set(g, 3, 2, CELL.WALL); set(g, 3, 5, CELL.WALL);
+      set(g, 4, 2, CELL.WALL); set(g, 4, 5, CELL.WALL);
+      set(g, 5, 1, CELL.WALL); set(g, 5, 3, CELL.WALL); set(g, 5, 4, CELL.WALL); set(g, 5, 6, CELL.WALL);
+      set(g, 6, 2, CELL.WALL); set(g, 6, 5, CELL.WALL);
+      set(g, 7, 3, CELL.WALL); set(g, 7, 4, CELL.WALL);
       return g;
     }
   },
   {
     id: 15,
     name: 'The Crucible',
-    subtitle: 'Where masters are forged',
-    par: 4,
-    hint: 'Walls block the direct paths. Find an indirect route.',
+    subtitle: 'Only the most precise routing survives',
+    par: 6,
+    hint: 'Almost every row and column has a wall. Find the two open corridors and route both beams through them.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
-      set(g, 7, 4, CELL.SUN_RECEPTOR);
+      set(g, 6, 7, CELL.SUN_RECEPTOR);
       set(g, 7, 7, CELL.MOON_EMITTER);
-      set(g, 0, 3, CELL.MOON_RECEPTOR);
-      set(g, 0, 6, CELL.WALL);
-      set(g, 7, 1, CELL.WALL);
-      set(g, 6, 4, CELL.WALL);
-      set(g, 1, 3, CELL.WALL);
+      set(g, 1, 0, CELL.MOON_RECEPTOR);
+      // Near-complete wall coverage — surgical routing required
+      set(g, 0, 2, CELL.WALL); set(g, 0, 4, CELL.WALL); set(g, 0, 6, CELL.WALL);
+      set(g, 1, 3, CELL.WALL); set(g, 1, 5, CELL.WALL); set(g, 1, 7, CELL.WALL);
+      set(g, 2, 1, CELL.WALL); set(g, 2, 4, CELL.WALL); set(g, 2, 6, CELL.WALL);
+      set(g, 3, 2, CELL.WALL); set(g, 3, 3, CELL.WALL); set(g, 3, 5, CELL.WALL);
+      set(g, 4, 1, CELL.WALL); set(g, 4, 4, CELL.WALL); set(g, 4, 6, CELL.WALL);
+      set(g, 5, 2, CELL.WALL); set(g, 5, 3, CELL.WALL); set(g, 5, 5, CELL.WALL);
+      set(g, 6, 1, CELL.WALL); set(g, 6, 4, CELL.WALL);
+      set(g, 7, 2, CELL.WALL); set(g, 7, 3, CELL.WALL); set(g, 7, 5, CELL.WALL);
       return g;
     }
   },
@@ -307,37 +332,48 @@ export const LEVELS = [
   {
     id: 16,
     name: 'Shadow Realm',
-    subtitle: 'Only fragments of light remain',
-    par: 4,
-    hint: 'Diagonal walls force each beam to take a unique path.',
+    subtitle: 'Darkness consumes everything but the path',
+    par: 6,
+    hint: 'The wall density leaves almost no free cells. Every mirror must serve a purpose — no wasted placements.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
-      set(g, 3, 7, CELL.SUN_RECEPTOR);
+      set(g, 5, 7, CELL.SUN_RECEPTOR);
       set(g, 7, 7, CELL.MOON_EMITTER);
-      set(g, 4, 0, CELL.MOON_RECEPTOR);
-      set(g, 0, 4, CELL.WALL);
-      set(g, 7, 3, CELL.WALL);
-      set(g, 2, 2, CELL.WALL);
-      set(g, 5, 5, CELL.WALL);
+      set(g, 2, 0, CELL.MOON_RECEPTOR);
+      // Extremely dense walls — maximum constraint
+      set(g, 0, 2, CELL.WALL); set(g, 0, 3, CELL.WALL); set(g, 0, 5, CELL.WALL); set(g, 0, 6, CELL.WALL);
+      set(g, 1, 1, CELL.WALL); set(g, 1, 4, CELL.WALL); set(g, 1, 6, CELL.WALL);
+      set(g, 2, 2, CELL.WALL); set(g, 2, 4, CELL.WALL); set(g, 2, 6, CELL.WALL);
+      set(g, 3, 1, CELL.WALL); set(g, 3, 3, CELL.WALL); set(g, 3, 5, CELL.WALL);
+      set(g, 4, 2, CELL.WALL); set(g, 4, 4, CELL.WALL); set(g, 4, 6, CELL.WALL);
+      set(g, 5, 1, CELL.WALL); set(g, 5, 3, CELL.WALL); set(g, 5, 5, CELL.WALL);
+      set(g, 6, 2, CELL.WALL); set(g, 6, 4, CELL.WALL); set(g, 6, 6, CELL.WALL);
+      set(g, 7, 1, CELL.WALL); set(g, 7, 3, CELL.WALL); set(g, 7, 5, CELL.WALL);
       return g;
     }
   },
   {
     id: 17,
     name: 'The Abyss',
-    subtitle: 'Stare into the void and find the path',
-    par: 5,
-    hint: 'Both emitters sit on the same edge. Plan mirror placements outward.',
+    subtitle: 'One wrong mirror and both paths collapse',
+    par: 6,
+    hint: 'The open cells form two interlocking snake paths. Both beams must share some mirrors. Draw the paths on paper first.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
       set(g, 7, 7, CELL.SUN_RECEPTOR);
       set(g, 0, 7, CELL.MOON_EMITTER);
       set(g, 7, 0, CELL.MOON_RECEPTOR);
-      set(g, 0, 3, CELL.WALL);
-      set(g, 0, 4, CELL.WALL);
-      set(g, 0, 5, CELL.WALL);
+      // Snake corridor — both beams forced through same narrow passages
+      set(g, 0, 2, CELL.WALL); set(g, 0, 3, CELL.WALL); set(g, 0, 4, CELL.WALL); set(g, 0, 5, CELL.WALL);
+      set(g, 1, 1, CELL.WALL); set(g, 1, 3, CELL.WALL); set(g, 1, 5, CELL.WALL); set(g, 1, 7, CELL.WALL);
+      set(g, 2, 1, CELL.WALL); set(g, 2, 3, CELL.WALL); set(g, 2, 5, CELL.WALL); set(g, 2, 7, CELL.WALL);
+      set(g, 3, 0, CELL.WALL); set(g, 3, 2, CELL.WALL); set(g, 3, 4, CELL.WALL); set(g, 3, 6, CELL.WALL);
+      set(g, 4, 1, CELL.WALL); set(g, 4, 3, CELL.WALL); set(g, 4, 5, CELL.WALL); set(g, 4, 7, CELL.WALL);
+      set(g, 5, 0, CELL.WALL); set(g, 5, 2, CELL.WALL); set(g, 5, 4, CELL.WALL); set(g, 5, 6, CELL.WALL);
+      set(g, 6, 1, CELL.WALL); set(g, 6, 3, CELL.WALL); set(g, 6, 5, CELL.WALL); set(g, 6, 7, CELL.WALL);
+      set(g, 7, 2, CELL.WALL); set(g, 7, 3, CELL.WALL); set(g, 7, 4, CELL.WALL); set(g, 7, 5, CELL.WALL);
       return g;
     }
   },
@@ -345,18 +381,23 @@ export const LEVELS = [
     id: 18,
     name: 'The Impossible',
     subtitle: 'Only geniuses and dreamers need apply',
-    par: 6,
-    hint: 'Staggered walls create a narrow corridor. Every mirror counts.',
+    par: 7,
+    hint: 'Fewer than 10 cells are free. Every single one is part of the solution. There is no margin for error.',
     build() {
       const g = emptyGrid();
       set(g, 0, 0, CELL.SUN_EMITTER);
-      set(g, 7, 4, CELL.SUN_RECEPTOR);
-      set(g, 7, 7, CELL.MOON_EMITTER);
-      set(g, 0, 3, CELL.MOON_RECEPTOR);
-      set(g, 0, 5, CELL.WALL);
-      set(g, 7, 2, CELL.WALL);
-      set(g, 2, 4, CELL.WALL);
-      set(g, 5, 3, CELL.WALL);
+      set(g, 7, 6, CELL.SUN_RECEPTOR);
+      set(g, 0, 7, CELL.MOON_EMITTER);
+      set(g, 7, 1, CELL.MOON_RECEPTOR);
+      // Maximum wall density — absolute minimum free cells
+      set(g, 0, 2, CELL.WALL); set(g, 0, 3, CELL.WALL); set(g, 0, 4, CELL.WALL); set(g, 0, 5, CELL.WALL);
+      set(g, 1, 1, CELL.WALL); set(g, 1, 3, CELL.WALL); set(g, 1, 4, CELL.WALL); set(g, 1, 5, CELL.WALL); set(g, 1, 6, CELL.WALL);
+      set(g, 2, 2, CELL.WALL); set(g, 2, 3, CELL.WALL); set(g, 2, 5, CELL.WALL); set(g, 2, 6, CELL.WALL);
+      set(g, 3, 1, CELL.WALL); set(g, 3, 3, CELL.WALL); set(g, 3, 4, CELL.WALL); set(g, 3, 6, CELL.WALL);
+      set(g, 4, 1, CELL.WALL); set(g, 4, 3, CELL.WALL); set(g, 4, 4, CELL.WALL); set(g, 4, 6, CELL.WALL);
+      set(g, 5, 2, CELL.WALL); set(g, 5, 3, CELL.WALL); set(g, 5, 5, CELL.WALL); set(g, 5, 6, CELL.WALL);
+      set(g, 6, 1, CELL.WALL); set(g, 6, 3, CELL.WALL); set(g, 6, 4, CELL.WALL); set(g, 6, 5, CELL.WALL);
+      set(g, 7, 2, CELL.WALL); set(g, 7, 3, CELL.WALL); set(g, 7, 4, CELL.WALL); set(g, 7, 5, CELL.WALL);
       return g;
     }
   },

@@ -137,14 +137,14 @@ The simulation runs twice per frame — once for SUN mode and once for MOON mode
 | 8 | AVERAGE | The Divide | 4 | Count the open columns carefully. Each beam has only one valid route through. |
 | 9 | AVERAGE | The Maze | 5 | Map the open cells first. Each beam is forced through a single corridor — find it. |
 | 10 | EXPERT | Solstice | 5 | Solve SUN first, then check MOON does not break it. A shared mirror is the key. |
-| 11 | MASTER | Master's Gate | 4 | Route SUN down the right side and MOON down the left. |
-| 12 | MASTER | The Gauntlet | 4 | Both beams must pass through the same column. |
-| 13 | MASTER | Mirror Maze | 4 | Route both beams through the intersection. |
-| 14 | MASTER | Double Cross | 5 | Plan both routes together — one mirror can serve both beams. |
-| 15 | MASTER | The Crucible | 4 | Walls block the direct paths. Find an indirect route. |
-| 16 | MASTER | Shadow Realm | 4 | Diagonal walls force each beam to take a unique path. |
-| 17 | GRAND MASTER | The Abyss | 5 | Both emitters sit on the same edge. Plan outward. |
-| 18 | GREAT GRAND MASTER | The Impossible | 6 | Staggered walls create a narrow corridor. Every mirror counts. |
+| 11 | MASTER | Master's Gate | 5 | Walls cut off the obvious routes. Trace each beam from emitter to receptor before placing anything. |
+| 12 | MASTER | The Gauntlet | 5 | Both beams must navigate the same central zone. One mirror position can redirect both. |
+| 13 | MASTER | Mirror Maze | 5 | Count available cells per row. Most are blocked — the open ones are your only options. |
+| 14 | MASTER | Double Cross | 6 | Shared mirrors are essential — a mirror that serves SUN will also redirect MOON. Plan collisions deliberately. |
+| 15 | MASTER | The Crucible | 6 | Almost every row and column has a wall. Find the two open corridors and route both beams through them. |
+| 16 | GRAND MASTER | Shadow Realm | 6 | The wall density leaves almost no free cells. Every mirror must serve a purpose — no wasted placements. |
+| 17 | GRAND MASTER | The Abyss | 6 | The open cells form two interlocking snake paths. Both beams must share some mirrors. Draw the paths on paper first. |
+| 18 | GREAT GRAND MASTER | The Impossible | 7 | Fewer than 10 cells are free. Every single one is part of the solution. There is no margin for error. |
 
 Tiers unlock progressively: completing Beginner–Expert (1–10) unlocks **MASTER** (11–16). Completing Master unlocks **GRAND MASTER** (17). Completing level 17 unlocks **GREAT GRAND MASTER** (18). Completing level 18 triggers the **Genius** screen.
 
