@@ -6,6 +6,7 @@ export default defineConfig({
   publicDir: 'public',
   server: {
     port: 3000,
+    host: true,
     proxy: {
       '/api': 'http://localhost:3001'
     }
