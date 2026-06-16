@@ -129,8 +129,8 @@ The simulation runs twice per frame — once for SUN mode and once for MOON mode
 |---|------|------|-----|------|
 | 1 | BEGINNER | First Light | 1 | `\` reflects rightward beams downward. `/` reflects them upward. Try both. |
 | 2 | BEGINNER | Second Glance | 1 | A `/` sends a rightward beam upward. Place one to redirect to the receptor. |
-| 3 | BASIC | Crossroads | 2 | One mirror turns the beam, another turns it again. Both face the same way. |
-| 4 | BASIC | Detour | 2 | A wall blocks the direct path. Turn before reaching it, then turn again. |
+| 3 | BASIC | Crossroads | 2 | The receptor is high up. Turn the beam upward first, then across. |
+| 4 | BASIC | Detour | 2 | The receptor is low down. Turn the beam downward first, then across. |
 | 5 | AVERAGE | Two Shadows | 3 | Each beam needs its own turn. Walls block the straight paths — work around them. |
 | 6 | AVERAGE | The Split | 4 | The central walls force each beam through a specific corridor. Plan one path at a time. |
 | 7 | AVERAGE | Crossings | 4 | The walls leave only a few valid mirror positions. Work backward from each receptor. |

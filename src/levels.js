@@ -38,12 +38,12 @@ export const LEVELS = [
     name: 'Crossroads',
     subtitle: 'Chain two mirrors to bend the beam twice',
     par: 2,
-    hint: 'One mirror turns the beam, another turns it again. Both mirrors face the same way here.',
+    hint: 'The receptor is high up. Turn the beam upward first, then across.',
     build() {
       const g = emptyGrid();
-      set(g, 2, 0, CELL.SUN_EMITTER);
-      set(g, 1, 7, CELL.SUN_RECEPTOR);
-      set(g, 2, 7, CELL.WALL);
+      set(g, 4, 0, CELL.SUN_EMITTER);
+      set(g, 0, 6, CELL.SUN_RECEPTOR);
+      set(g, 4, 6, CELL.WALL);
       return g;
     }
   },
@@ -52,12 +52,12 @@ export const LEVELS = [
     name: 'Detour',
     subtitle: 'Navigate around a stone wall',
     par: 2,
-    hint: 'A wall blocks the direct path. Turn downward before reaching it, then turn right again.',
+    hint: 'The receptor is low down. Turn the beam downward first, then across.',
     build() {
       const g = emptyGrid();
-      set(g, 2, 0, CELL.SUN_EMITTER);
-      set(g, 4, 6, CELL.SUN_RECEPTOR);
-      set(g, 2, 5, CELL.WALL);
+      set(g, 1, 0, CELL.SUN_EMITTER);
+      set(g, 6, 5, CELL.SUN_RECEPTOR);
+      set(g, 1, 5, CELL.WALL);
       return g;
     }
   },
