@@ -5,7 +5,7 @@
 
 Built with vanilla JavaScript, rendered on HTML Canvas 2D, with audio synthesis via the Web Audio API and optional AI-powered dialogue through Google Gemini. Deployed as a static site on the Netlify CDN.
 
-**[vinny-deploy.netlify.app](https://vinny-deploy.netlify.app)** *(temporarily unavailable — credit limit reached)*
+**[vinny-deploy.netlify.app](https://solstice-game-pi.vercel.app/)** *(temporarily unavailable — credit limit reached)*
 
 ---
 
