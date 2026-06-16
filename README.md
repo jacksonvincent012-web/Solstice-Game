@@ -3,9 +3,9 @@
 
 **A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, 18 levels across 7 tiers, a CRT terminal narrative, undo/redo, and a star-based rating system.**
 
-Built with vanilla JavaScript, rendered on HTML Canvas 2D, with audio synthesis via the Web Audio API and optional AI-powered dialogue through Google Gemini. Deployed as a static site on the Netlify CDN.
+Built with vanilla JavaScript, rendered on HTML Canvas 2D, with audio synthesis via the Web Audio API and optional AI-powered dialogue through Google Gemini. Deployed as a static site on the Vercel CDN.
 
-**[vinny-deploy.netlify.app](https://vinny-deploy.netlify.app)** *(temporarily unavailable — credit limit reached)*
+**[solstice-game-pi.vercel.app](https://solstice-game-pi.vercel.app)**
 
 ---
 
@@ -226,7 +226,7 @@ flowchart LR
 | Build | Vite + ESBuild |
 | Audio | Web Audio API (OscillatorNode + GainNode) |
 | AI | Google Gemini API (optional) |
-| Hosting | Netlify CDN |
+| Hosting | Vercel CDN |
 | Persistence | localStorage |
 | Documentation | Mermaid (architecture diagrams) |
 | Tooling | Python 3 (level solver) |
@@ -266,21 +266,21 @@ flowchart LR
         direction LR
         SRC["Source<br>src/"] --> VITE["Vite Build<br>npm run build"]
         VITE --> DIST["dist/<br>index.html + assets"]
-        DIST --> NETLIFY["Netlify CDN<br>HTTPS · Edge cache<br>Instant rollback"]
-        NETLIFY --> LIVE["Production<br>vinny-deploy.netlify.app"]
+        DIST --> VERCEL["Vercel CDN<br>HTTPS · Edge cache<br>Instant rollback"]
+        VERCEL --> LIVE["Production<br>solstice-game-pi.vercel.app"]
     end
 
     style SRC fill:#1a1a3a,stroke:#8888bb,color:#bbb
     style VITE fill:#1a1a3a,stroke:#7b68ee,color:#7b68ee
     style DIST fill:#1a1a3a,stroke:#555,color:#888
-    style NETLIFY fill:#1a1a3a,stroke:#00ff41,color:#00ff41
+    style VERCEL fill:#1a1a3a,stroke:#00ff41,color:#00ff41
     style LIVE fill:#1a1a3a,stroke:#ffd700,color:#ffd700
     style Deploy fill:#0a0a1a,stroke:#333,color:#888
 ```
 
 Build produces a versioned bundle with content-hashed assets for cache busting. The site is served over HTTPS with global edge distribution, instant rollback, and zero server-side runtime.
 
-> **Note:** The live deployment is temporarily down — Netlify free tier credit limit reached. To run locally: `npm install && npm run dev`.
+> To run locally: `npm install && npm run dev`.
 
 ---
 
