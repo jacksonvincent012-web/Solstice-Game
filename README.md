@@ -1,11 +1,11 @@
 # Solstice
 <img width="1920" height="1032" alt="Screenshot 2026-06-15 202114" src="https://github.com/user-attachments/assets/4a8258fd-2744-474f-98d4-f0b6a29cabe3" />
 
-**A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, 10 graduated levels, a CRT terminal narrative, undo/redo, and a star-based rating system.**
+**A light-routing puzzle game with a custom ray-tracing engine, dual-spectrum beam physics, 18 levels across 7 tiers, a CRT terminal narrative, undo/redo, and a star-based rating system.**
 
 Built with vanilla JavaScript, rendered on HTML Canvas 2D, with audio synthesis via the Web Audio API and optional AI-powered dialogue through Google Gemini. Deployed as a static site on the Netlify CDN.
 
-**[vinny-deploy.netlify.app](https://vinny-deploy.netlify.app)**
+**[vinny-deploy.netlify.app](https://vinny-deploy.netlify.app)** *(temporarily unavailable — credit limit reached)*
 
 ---
 
@@ -123,6 +123,33 @@ The simulation runs twice per frame — once for SUN mode and once for MOON mode
 
 ---
 
+## Level Progression
+
+| # | Tier | Name | Par | Hint |
+|---|------|------|-----|------|
+| 1 | BEGINNER | First Light | 1 | `\` reflects rightward beams downward. `/` reflects them upward. Try both. |
+| 2 | BEGINNER | Second Glance | 1 | A `/` sends a rightward beam upward. Place one to redirect to the receptor. |
+| 3 | BASIC | Crossroads | 2 | One mirror turns the beam, another turns it again. Both face the same way. |
+| 4 | BASIC | Detour | 2 | A wall blocks the direct path. Turn before reaching it, then turn again. |
+| 5 | AVERAGE | Two Shadows | 4 | Toggle between SUN and MOON mode. Each beam follows its own path. |
+| 6 | AVERAGE | The Split | 4 | SUN needs `\` near the right edge. MOON needs `/` near the left edge. |
+| 7 | AVERAGE | Crossings | 4 | SUN and MOON beams pass through each other. Plan each route independently. |
+| 8 | AVERAGE | The Divide | 4 | SUN goes right and turns down. MOON goes left and turns up. |
+| 9 | AVERAGE | The Maze | 4 | Trace each path backward from the receptor. |
+| 10 | EXPERT | Solstice | 5 | Use both toggle states to verify your solution. |
+| 11 | MASTER | Master's Gate | 4 | Route SUN down the right side and MOON down the left. |
+| 12 | MASTER | The Gauntlet | 4 | Both beams must pass through the same column. |
+| 13 | MASTER | Mirror Maze | 4 | Route both beams through the intersection. |
+| 14 | MASTER | Double Cross | 5 | Plan both routes together — one mirror can serve both beams. |
+| 15 | MASTER | The Crucible | 4 | Walls block the direct paths. Find an indirect route. |
+| 16 | MASTER | Shadow Realm | 4 | Diagonal walls force each beam to take a unique path. |
+| 17 | GRAND MASTER | The Abyss | 5 | Both emitters sit on the same edge. Plan outward. |
+| 18 | GREAT GRAND MASTER | The Impossible | 6 | Staggered walls create a narrow corridor. Every mirror counts. |
+
+Tiers unlock progressively: completing Beginner–Expert (1–10) unlocks **MASTER** (11–16). Completing Master unlocks **GRAND MASTER** (17). Completing level 17 unlocks **GREAT GRAND MASTER** (18). Completing level 18 triggers the **Genius** screen.
+
+---
+
 ## Key Technical Challenges
 
 ### Mirrors and Vector Reflection
@@ -149,6 +176,12 @@ Audio effects for receptor activation use a state comparison pattern: `currentLi
 ### Responsive Canvas Scaling
 The canvas maintains a fixed internal resolution (560×560) while CSS scales it to fill its container. Input coordinates are reverse-mapped by `clientX → (clientX - rect.left) × (internalSize / rect.width)`, preserving pixel-accurate grid hits at any viewport size.
 
+### Solver-Verified Level Design
+A Python DFS solver (`tools/solver.py`) validates every level at its stated par. It uses beam-aware candidate pruning, a `candidate_score` heuristic prioritizing cells closer to receptors, and a 12-candidate branching limit to prevent combinatorial explosion. Levels 12–18 were redesigned multiple times after the solver exposed unintended shortcuts.
+
+### Tier Unlock System
+Levels are grouped into 7 tiers. Unlock flags persist in localStorage. `isLevelAccessible(id)` checks both the unlock flag and sequential completion within the tier. Special modals (30-second countdown for Grand Master reveal) provide narrative payoff at each tier transition.
+
 ---
 
 ## Development Progression
@@ -163,13 +196,15 @@ flowchart LR
         D2["Phase 2<br>Game Systems<br>MOON emitter · Day/night toggle<br>5 levels · Win detection<br>localStorage save"]
         D3["Phase 3<br>Terminal + Audio<br>CRT terminal · 3-question AI chat<br>Gemini API · Web Audio SFX<br>Bletchley narrative"]
         D4["Phase 4<br>Editor + Polish<br>Level editor · JSON export<br>Animated beams · Particles<br>Touch support · Intro screen"]
+        D5["Phase 5<br>Master Expansion<br>18 levels · 7 tiers<br>Python solver verification<br>Tier unlock + modals"]
     end
-    D1 --> D2 --> D3 --> D4
+    D1 --> D2 --> D3 --> D4 --> D5
 
     style D1 fill:#1a1a3a,stroke:#ffd700,color:#ffd700
     style D2 fill:#1a1a3a,stroke:#4a90d9,color:#4a90d9
     style D3 fill:#1a1a3a,stroke:#00ff41,color:#00ff41
     style D4 fill:#1a1a3a,stroke:#7b68ee,color:#7b68ee
+    style D5 fill:#1a1a3a,stroke:#ff6b35,color:#ff6b35
     style Dev fill:#0a0a1a,stroke:#333,color:#888
 ```
 
@@ -177,9 +212,9 @@ flowchart LR
 |-------|-------|---------------|----------|
 | **1** | Core Mechanics | Grid, Canvas renderer, ray tracer, SUN emitter, mirror placement (`/` `\`) | (DAY1) |
 | **2** | Game Systems | MOON emitter, day/night toggle, 5 levels, win detection, level selector, localStorage | (DAY2) |
-| **5** | Level Expansion | 10 levels with graduated difficulty, undo/redo, star rating (1-3), sound settings, first-play demo tutorial | (post-launch) |
 | **3** | Terminal + Audio | CRT terminal, Gemini API, 3-question chat, Web Audio synthesis, Bletchley narrative | (DAY3) |
 | **4** | Editor + Polish | Level editor, particle system, animated beams, intro screen, touch support, responsive CSS | (DAY4) |
+| **5** | Level Expansion | 18 levels across 7 tiers, Python solver verification, tier unlock system, special modals | (post-launch) |
 
 ## Technologies
 
@@ -216,7 +251,6 @@ flowchart LR
 │   ├── terminal.js         CRT terminal, Gemini API, demo dialogue
 │   ├── editor.js           Level editor, tool palette, JSON export
 │   ├── audio.js            Web Audio sound synthesis
-│   ├── demo.js             First-play animated tutorial
 │   ├── constants.js        Enums, colors, grid dimensions
 │   └── main.css            Full stylesheet, responsive media queries
 └── README.md
@@ -245,6 +279,8 @@ flowchart LR
 ```
 
 Build produces a versioned bundle with content-hashed assets for cache busting. The site is served over HTTPS with global edge distribution, instant rollback, and zero server-side runtime.
+
+> **Note:** The live deployment is temporarily down — Netlify free tier credit limit reached. To run locally: `npm install && npm run dev`.
 
 ---
 
