@@ -65,118 +65,147 @@ export const LEVELS = [
     id: 5,
     name: 'Two Shadows',
     subtitle: 'Route both sun and moon to their targets',
-    par: 4,
-    hint: 'Toggle between SUN and MOON mode. Each beam follows its own path through the mirrors you place.',
+    par: 3,
+    hint: 'Each beam needs its own turn. Walls block the straight paths — work around them.',
     build() {
       const g = emptyGrid();
-      set(g, 1, 0, CELL.SUN_EMITTER);
-      set(g, 3, 7, CELL.SUN_RECEPTOR);
-      set(g, 5, 7, CELL.MOON_EMITTER);
-      set(g, 7, 0, CELL.MOON_RECEPTOR);
-      set(g, 1, 7, CELL.WALL);
-      set(g, 5, 0, CELL.WALL);
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 5, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 2, 0, CELL.MOON_RECEPTOR);
+      // Wall corridor forces indirect routing
+      set(g, 0, 3, CELL.WALL);
+      set(g, 0, 4, CELL.WALL);
+      set(g, 0, 5, CELL.WALL);
+      set(g, 7, 2, CELL.WALL);
+      set(g, 7, 3, CELL.WALL);
+      set(g, 7, 4, CELL.WALL);
+      set(g, 3, 3, CELL.WALL);
+      set(g, 4, 4, CELL.WALL);
       return g;
     }
   },
   {
     id: 6,
     name: 'The Split',
-    subtitle: 'SUN and MOON take different routes',
+    subtitle: 'SUN and MOON take different routes through the maze',
     par: 4,
-    hint: 'SUN needs a \\ near the right edge. MOON needs a / near the left edge. Plan both paths.',
+    hint: 'The central walls force each beam through a specific corridor. Plan one path at a time.',
     build() {
       const g = emptyGrid();
-      set(g, 1, 0, CELL.SUN_EMITTER);
-      set(g, 4, 7, CELL.SUN_RECEPTOR);
-      set(g, 6, 7, CELL.MOON_EMITTER);
-      set(g, 3, 0, CELL.MOON_RECEPTOR);
-      set(g, 1, 7, CELL.WALL);
-      set(g, 6, 0, CELL.WALL);
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 7, 6, CELL.SUN_RECEPTOR);
+      set(g, 0, 7, CELL.MOON_EMITTER);
+      set(g, 7, 1, CELL.MOON_RECEPTOR);
+      // Vertical wall barrier splitting the board
+      set(g, 1, 3, CELL.WALL);
+      set(g, 2, 3, CELL.WALL);
+      set(g, 3, 3, CELL.WALL);
+      set(g, 4, 4, CELL.WALL);
+      set(g, 5, 4, CELL.WALL);
+      set(g, 6, 4, CELL.WALL);
+      set(g, 2, 6, CELL.WALL);
+      set(g, 5, 1, CELL.WALL);
       return g;
     }
   },
   {
     id: 7,
     name: 'Crossings',
-    subtitle: 'Beams must cross paths without interfering',
+    subtitle: 'Beams must weave through a wall gauntlet',
     par: 4,
-    hint: 'SUN and MOON beams pass through each other without interference. Plan each route independently.',
+    hint: 'The walls leave only a few valid mirror positions. Work backward from each receptor.',
     build() {
       const g = emptyGrid();
-      set(g, 0, 0, CELL.SUN_EMITTER);
-      set(g, 4, 7, CELL.SUN_RECEPTOR);
-      set(g, 7, 7, CELL.MOON_EMITTER);
-      set(g, 3, 0, CELL.MOON_RECEPTOR);
-      set(g, 0, 7, CELL.WALL);
-      set(g, 7, 0, CELL.WALL);
+      set(g, 0, 1, CELL.SUN_EMITTER);
+      set(g, 6, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 6, CELL.MOON_EMITTER);
+      set(g, 1, 0, CELL.MOON_RECEPTOR);
+      // Dense wall grid — only narrow corridors remain
+      set(g, 0, 4, CELL.WALL);
+      set(g, 1, 4, CELL.WALL);
       set(g, 2, 2, CELL.WALL);
+      set(g, 2, 5, CELL.WALL);
+      set(g, 3, 2, CELL.WALL);
+      set(g, 4, 5, CELL.WALL);
+      set(g, 5, 2, CELL.WALL);
       set(g, 5, 5, CELL.WALL);
+      set(g, 6, 3, CELL.WALL);
+      set(g, 7, 3, CELL.WALL);
       return g;
     }
   },
   {
     id: 8,
     name: 'The Divide',
-    subtitle: 'Two walls split the board into passages',
+    subtitle: 'Stone walls close every obvious path',
     par: 4,
-    hint: 'SUN goes right and turns down. MOON goes left and turns up. Plan two turns per path.',
+    hint: 'Count the open columns carefully. Each beam has only one valid route through.',
     build() {
       const g = emptyGrid();
-      set(g, 1, 0, CELL.SUN_EMITTER);
-      set(g, 4, 7, CELL.SUN_RECEPTOR);
-      set(g, 6, 7, CELL.MOON_EMITTER);
-      set(g, 3, 0, CELL.MOON_RECEPTOR);
-      set(g, 1, 5, CELL.WALL); set(g, 1, 6, CELL.WALL);
-      set(g, 6, 4, CELL.WALL);
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 7, 7, CELL.SUN_RECEPTOR);
+      set(g, 0, 7, CELL.MOON_EMITTER);
+      set(g, 7, 0, CELL.MOON_RECEPTOR);
+      // Staggered walls blocking direct diagonals
+      set(g, 1, 2, CELL.WALL);
+      set(g, 1, 5, CELL.WALL);
+      set(g, 2, 4, CELL.WALL);
+      set(g, 3, 1, CELL.WALL);
+      set(g, 3, 6, CELL.WALL);
+      set(g, 4, 1, CELL.WALL);
+      set(g, 4, 6, CELL.WALL);
+      set(g, 5, 3, CELL.WALL);
+      set(g, 6, 2, CELL.WALL);
+      set(g, 6, 5, CELL.WALL);
       return g;
     }
   },
   {
     id: 9,
     name: 'The Maze',
-    subtitle: 'Navigate through corridors of stone',
-    par: 4,
-    hint: 'Trace each path backward from the receptor.',
+    subtitle: 'Only one path exists for each beam',
+    par: 5,
+    hint: 'Map the open cells first. Each beam is forced through a single corridor — find it.',
     build() {
       const g = emptyGrid();
-      set(g, 0, 3, CELL.SUN_EMITTER);
-      set(g, 7, 3, CELL.SUN_RECEPTOR);
-      set(g, 7, 4, CELL.MOON_EMITTER);
-      set(g, 0, 4, CELL.MOON_RECEPTOR);
-      for (let i = 1; i <= 5; i++) {
-        set(g, i, 1, CELL.WALL);
-        set(g, i, 6, CELL.WALL);
-      }
-      set(g, 3, 2, CELL.WALL);
-      set(g, 3, 3, CELL.WALL);
-      set(g, 3, 4, CELL.WALL);
-      set(g, 4, 3, CELL.WALL);
-      set(g, 4, 4, CELL.WALL);
-      set(g, 4, 5, CELL.WALL);
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 4, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 3, 0, CELL.MOON_RECEPTOR);
+      // Dense wall maze — leaves only forced corridors
+      set(g, 0, 2, CELL.WALL); set(g, 0, 3, CELL.WALL);
+      set(g, 1, 5, CELL.WALL); set(g, 1, 6, CELL.WALL);
+      set(g, 2, 1, CELL.WALL); set(g, 2, 4, CELL.WALL);
+      set(g, 3, 3, CELL.WALL); set(g, 3, 6, CELL.WALL);
+      set(g, 4, 2, CELL.WALL); set(g, 4, 5, CELL.WALL);
+      set(g, 5, 1, CELL.WALL); set(g, 5, 4, CELL.WALL);
+      set(g, 6, 3, CELL.WALL); set(g, 6, 6, CELL.WALL);
+      set(g, 7, 1, CELL.WALL); set(g, 7, 4, CELL.WALL);
       return g;
     }
   },
   {
     id: 10,
     name: 'Solstice',
-    subtitle: 'The final balance of light and shadow',
+    subtitle: 'The final balance — nothing is obvious',
     par: 5,
-    hint: 'Use both toggle states to verify your solution.',
+    hint: 'Solve SUN first, then check MOON does not break it. A shared mirror is the key.',
     build() {
       const g = emptyGrid();
-      set(g, 0, 1, CELL.SUN_EMITTER);
-      set(g, 5, 7, CELL.SUN_RECEPTOR);
-      set(g, 7, 6, CELL.MOON_EMITTER);
-      set(g, 2, 0, CELL.MOON_RECEPTOR);
-      set(g, 0, 7, CELL.WALL);
-      set(g, 7, 0, CELL.WALL);
-      const walls = [
-        [1,2],[1,3],[1,4],[1,5],
-        [3,1],[4,1],[5,1],
-        [3,5],[4,5],[5,5],
-        [6,2],[6,3],[6,4],
-      ];
-      for (const [r, c] of walls) set(g, r, c, CELL.WALL);
+      set(g, 0, 0, CELL.SUN_EMITTER);
+      set(g, 6, 7, CELL.SUN_RECEPTOR);
+      set(g, 7, 7, CELL.MOON_EMITTER);
+      set(g, 1, 0, CELL.MOON_RECEPTOR);
+      // Tight wall structure — very few open cells
+      set(g, 0, 3, CELL.WALL); set(g, 0, 4, CELL.WALL); set(g, 0, 5, CELL.WALL);
+      set(g, 1, 2, CELL.WALL); set(g, 1, 6, CELL.WALL);
+      set(g, 2, 4, CELL.WALL);
+      set(g, 3, 1, CELL.WALL); set(g, 3, 5, CELL.WALL);
+      set(g, 4, 2, CELL.WALL); set(g, 4, 6, CELL.WALL);
+      set(g, 5, 4, CELL.WALL);
+      set(g, 6, 1, CELL.WALL); set(g, 6, 3, CELL.WALL);
+      set(g, 7, 2, CELL.WALL); set(g, 7, 3, CELL.WALL); set(g, 7, 4, CELL.WALL);
       return g;
     }
   },

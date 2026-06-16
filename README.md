@@ -131,12 +131,12 @@ The simulation runs twice per frame — once for SUN mode and once for MOON mode
 | 2 | BEGINNER | Second Glance | 1 | A `/` sends a rightward beam upward. Place one to redirect to the receptor. |
 | 3 | BASIC | Crossroads | 2 | One mirror turns the beam, another turns it again. Both face the same way. |
 | 4 | BASIC | Detour | 2 | A wall blocks the direct path. Turn before reaching it, then turn again. |
-| 5 | AVERAGE | Two Shadows | 4 | Toggle between SUN and MOON mode. Each beam follows its own path. |
-| 6 | AVERAGE | The Split | 4 | SUN needs `\` near the right edge. MOON needs `/` near the left edge. |
-| 7 | AVERAGE | Crossings | 4 | SUN and MOON beams pass through each other. Plan each route independently. |
-| 8 | AVERAGE | The Divide | 4 | SUN goes right and turns down. MOON goes left and turns up. |
-| 9 | AVERAGE | The Maze | 4 | Trace each path backward from the receptor. |
-| 10 | EXPERT | Solstice | 5 | Use both toggle states to verify your solution. |
+| 5 | AVERAGE | Two Shadows | 3 | Each beam needs its own turn. Walls block the straight paths — work around them. |
+| 6 | AVERAGE | The Split | 4 | The central walls force each beam through a specific corridor. Plan one path at a time. |
+| 7 | AVERAGE | Crossings | 4 | The walls leave only a few valid mirror positions. Work backward from each receptor. |
+| 8 | AVERAGE | The Divide | 4 | Count the open columns carefully. Each beam has only one valid route through. |
+| 9 | AVERAGE | The Maze | 5 | Map the open cells first. Each beam is forced through a single corridor — find it. |
+| 10 | EXPERT | Solstice | 5 | Solve SUN first, then check MOON does not break it. A shared mirror is the key. |
 | 11 | MASTER | Master's Gate | 4 | Route SUN down the right side and MOON down the left. |
 | 12 | MASTER | The Gauntlet | 4 | Both beams must pass through the same column. |
 | 13 | MASTER | Mirror Maze | 4 | Route both beams through the intersection. |
